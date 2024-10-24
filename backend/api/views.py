@@ -2,18 +2,7 @@
 
 from rest_framework import generics
 from .models import User, Student, Department, Faculty, Driver, Vehicle, Notifications, Bookings, DepartureDetails, ArrivalDetails
-from .serializers import (
-    UserSerializer,
-    StudentSerializer,
-    DepartmentSerializer,
-    FacultySerializer,
-    DriverSerializer,
-    VehicleSerializer,
-    NotificationSerializer,
-    BookingSerializer,
-    DepartureDetailsSerializer,
-    ArrivalDetailsSerializer
-)
+from api.serializers import *
 
 
 class UserListCreateView(generics.ListCreateAPIView):
