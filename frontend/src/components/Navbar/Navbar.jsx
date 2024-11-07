@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import logo from '../../assets/iiti_logo.png';
-import { Link } from 'react-router-dom';
+
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(true); // Change this to manage login state
@@ -24,18 +24,18 @@ function Navbar() {
       <div className='hidden md:flex space-x-8 mr-12 text-lg font-semibold'>
         {isLoggedIn ? (
           <>
-            <Link className='bg-gray-900 text-white hover:underline'>Home</Link>
-            <Link className='bg-gray-900 text-white hover:underline'>Bookings</Link>
-            <Link className='bg-gray-900 text-white hover:underline'>Rates</Link>
-            <Link className='bg-gray-900 text-white hover:underline'>My profile</Link>
-            <Link className='bg-red-700 text-white text-md hover:bg-red-800 p-1 rounded-md'>Log out</Link>
+            <button className='bg-gray-900 text-white hover:underline'>Home</button>
+            <button className='bg-gray-900 text-white hover:underline'>Bookings</button>
+            <button className='bg-gray-900 text-white hover:underline'>Rates</button>
+            <button className='bg-gray-900 text-white hover:underline'>My profile</button>
+            <button className='bg-red-700 text-white text-md hover:bg-red-800 p-1 rounded-md'>Log out</button>
           </>
         ) : (
           <>
-            <Link className='bg-gray-900 text-white hover:underline'>Home</Link>
-            <Link className='bg-gray-900 text-white hover:underline'>Rates</Link>
-            <Link className='bg-gray-900 text-white hover:underline'>Login</Link>
-            <Link className='bg-gray-900 text-white hover:underline'>Signup</Link>
+            <button className='bg-gray-900 text-white hover:underline'>Home</button>
+            <button className='bg-gray-900 text-white hover:underline'>Rates</button>
+            <button className='bg-gray-900 text-white hover:underline'>Login</button>
+            <button className='bg-gray-900 text-white hover:underline'>Signup</button>
           </>
         )}
       </div>
