@@ -11,8 +11,8 @@ function App() {
   return (
     <>
       <div className='h-screen w-screen'>
-        {/* <Home/> */}
-        <Booking/>
+        <Home/>
+        {/* <Booking/> */}
       </div>
     </>
   )
