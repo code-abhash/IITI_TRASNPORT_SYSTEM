@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import logo from '../../assets/iiti_logo.png';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // Change this to manage login state
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Change this to manage login state
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -24,18 +25,18 @@ function Navbar() {
       <div className='hidden md:flex space-x-8 mr-12 text-lg font-semibold'>
         {isLoggedIn ? (
           <>
-            <button className='bg-gray-900 text-white hover:underline'>Home</button>
-            <button className='bg-gray-900 text-white hover:underline'>Bookings</button>
-            <button className='bg-gray-900 text-white hover:underline'>Rates</button>
-            <button className='bg-gray-900 text-white hover:underline'>My profile</button>
+            <Link to="/" className='bg-gray-900 text-white hover:underline'>Home</Link>
+            <Link to="/bookings" className='bg-gray-900 text-white hover:underline'>Bookings</Link>
+            <Link to="/rent" className='bg-gray-900 text-white hover:underline'>Rates</Link>
+            <Link to="/profile" className='bg-gray-900 text-white hover:underline'>My profile</Link>
             <button className='bg-red-700 text-white text-md hover:bg-red-800 p-1 rounded-md'>Log out</button>
           </>
         ) : (
           <>
-            <button className='bg-gray-900 text-white hover:underline'>Home</button>
-            <button className='bg-gray-900 text-white hover:underline'>Rates</button>
-            <button className='bg-gray-900 text-white hover:underline'>Login</button>
-            <button className='bg-gray-900 text-white hover:underline'>Signup</button>
+            <Link to="/" className='bg-gray-900 text-white hover:underline'>Home</Link>
+            <Link to="/rent" className='bg-gray-900 text-white hover:underline'>Rates</Link>
+            <Link to="/login" className='bg-gray-900 text-white hover:underline'>Login</Link>
+            <Link to="/signup" className='bg-gray-900 text-white hover:underline'>Signup</Link>
           </>
         )}
       </div>
@@ -44,18 +45,18 @@ function Navbar() {
           <div className="flex flex-col space-y-2 p-4">
             {isLoggedIn ? (
               <>
-                <button className='hover:underline text-left'>Home</button>
-                <button className='hover:underline text-left'>Bookings</button>
-                <button className='hover:underline text-left'>Rates</button>
-                <button className='hover:underline text-left'>My profile</button>
+                <Link to="/" className='hover:underline text-left'>Home</Link>
+                <Link to="/bookings" className='hover:underline text-left'>Bookings</Link>
+                <Link to="/rent" className='hover:underline text-left'>Rates</Link>
+                <Link to="/profile" className='hover:underline text-left'>My profile</Link>
                 <button className='bg-red-700 hover:bg-red-800 p-1 rounded-md text-left'>Log out</button>
               </>
             ) : (
               <>
-                <button className='bg-gray-900 text-white hover:underline'>Home</button>
-                <button className='bg-gray-900 text-white hover:underline'>Rates</button>
-                <button className='hover:underline text-left'>Login</button>
-                <button className='hover:underline text-left'>Signup</button>
+                <Link to="/" className='hover:underline text-left'>Home</Link>
+                <Link to="/rent" className='hover:underline text-left'>Rates</Link>
+                <Link to="/login" className='hover:underline text-left'>Login</Link>
+                <Link to="/signup" className='hover:underline text-left'>Signup</Link>
               </>
             )}
           </div>
