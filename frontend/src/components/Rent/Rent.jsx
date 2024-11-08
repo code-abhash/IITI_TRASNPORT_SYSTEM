@@ -44,12 +44,12 @@ function Rent() {
               <img src={vehicleIcon} alt="Vehicle Icon" className="w-18 h-12 ml-2 " />
             </div>
             <div className="overflow-x-auto">
-              <table className="table-auto w-full bg-slate-200 bg-opacity-95 border border-gray-300 rounded-lg shadow-md">
+              <table className="table-auto w-full bg-white bg-opacity-90 border-[3px] border-gray-500 rounded-lg shadow-lg">
                 <thead className="bg-gray-400 bg-opacity-50">
                   <tr>
-                    <th className="px-4 py-2 text-left font-semibold text-gray-700 border">Sl. No.</th>
-                    <th className="px-4 py-2 text-left font-semibold text-gray-700 border">Details of Vehicles</th>
-                    <th className="px-4 py-2 text-left font-semibold text-gray-700 border">Rate</th>
+                    <th className="px-4 py-2 text-left font-semibold text-gray-800 border">Sl. No.</th>
+                    <th className="px-4 py-2 text-left font-semibold text-gray-800 border">Details of Vehicles</th>
+                    <th className="px-4 py-2 text-left font-semibold text-gray-800 border">Rate</th>
                   </tr>
                 </thead>
                 <tbody>

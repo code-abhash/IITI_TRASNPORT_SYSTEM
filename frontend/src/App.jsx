@@ -4,7 +4,8 @@ import Rent from './components/Rent/Rent';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import Bookings from './components/Bookings/Bookings';
-
+import Profile
+ from './components/Profile/Profile';
 function App() {
   return (
     <Router>
@@ -13,6 +14,7 @@ function App() {
         <Route path="/signup" element={<Register />} />
         <Route path="/bookings" element={<Bookings />} /> 
         <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/rent" element={<Rent />} />
       </Routes>
     </Router>
