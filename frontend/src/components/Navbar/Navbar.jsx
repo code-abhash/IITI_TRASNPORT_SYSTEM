@@ -4,7 +4,7 @@ import logo from '../../assets/iiti_logo.png';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Change this to manage login state
+  const [isLoggedIn, setIsLoggedIn] = useState(true); // Change this to manage login state
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
