@@ -1,0 +1,5 @@
+.set_background_image{
+    background-image: url('../../frontend/src/assets/slide_pic_1.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
