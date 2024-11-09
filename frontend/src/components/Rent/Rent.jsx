@@ -9,7 +9,6 @@ import img3 from '../../assets/slide_pic_3.png'
 import electric_schedule from '../../assets/electric_color.png'
 import Buses_Schedule from '../../assets/bus.png'
 
-
 function Rent() {
   return (
     <>
@@ -100,7 +99,8 @@ function Rent() {
       <div className=" text-center">
         {/* PDF Link */}
         <a
-        href="/Public/scheduleEV.pdf"  // Correct path to the file in the public folder
+        href='../../../public/ev_schedule.pdf'  // Correct path to the file in the public folder
+        target="_blank"
         className="text-blue-400 hover:text-blue-600"
         >
         View Schedule PDF
@@ -119,7 +119,7 @@ function Rent() {
       <div className="text-center">
         {/* PDF Link */}
         <a
-          href="/Public/Bus_schedule.pdf" // Replace with the actual PDF path
+          href='../../../public/bus_schedule.pdf' // Replace with the actual PDF path
           target="_blank"
           className="text-blue-400 hover:text-blue-600"
         >
