@@ -5,15 +5,18 @@ import img2 from '../../assets/slide_pic_2.jpg';
 
 function BookingForm() {
   return (
-    <div className="relative h-screen w-full">
+    <>
+    <div
+        className="relative flex flex-col min-h-screen bg-gray-50"
+        style={{
+          backgroundImage: `url(${img2})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="absolute inset-0 bg-black opacity-80"></div>
       <div className="fixed top-0 left-0 w-full z-20">
         <Navbar />
-      </div>
-
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0">
-        <img src={img2} alt="Background" className="object-cover w-full h-full" />
-        <div className="absolute inset-0 bg-black opacity-80"></div>
       </div>
       
       {/* Form Content */}
@@ -112,11 +115,12 @@ function BookingForm() {
           </button>
         </div>
       </div>
-        <div className='mt-10'>
-            <Footer />
-        </div>
       
     </div>
+    <div>
+            <Footer />
+        </div>
+    </>
   );
 }
 
