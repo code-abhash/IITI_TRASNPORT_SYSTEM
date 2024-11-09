@@ -8,6 +8,7 @@ import Footer from '../Footer/Footer';
 function Home() {
   const images = [img1, img2, img3];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) =>
@@ -36,11 +37,11 @@ function Home() {
   ];
 
   return (
-    <div className="relative h-screen w-full">
+    <div className="relative w-full h-screen">
       <div className="fixed top-0 left-0 w-full z-20">
         <Navbar />
       </div>
-      
+
       {/* Slideshow Background */}
       <div className="absolute inset-0 z-0">
         <img
@@ -50,16 +51,16 @@ function Home() {
         />
         <div className="absolute inset-0 bg-black opacity-80"></div>
       </div>
-      
+
       {/* Content Overlay */}
-      <div className="relative z-10 flex flex-col md:flex-row justify-center items-center h-full px-10 space-x-48">
-        <div className="text-white text-6xl font-bold w-96">
+      <div className="relative z-10 flex flex-col md:flex-row justify-center items-center h-full px-4 md:px-10 space-y-20 md:space-y-0 md:space-x-24 lg:space-x-48 pt-12">
+        <div className="text-white text-3xl sm:text-4xl md:text-6xl font-bold text-center md:text-left max-w-full md:max-w-xs">
           IIT INDORE TRANSPORT SYSTEM
         </div>
-        
+
         {/* Notifications Card */}
-        <div className="bg-white bg-opacity-90 border-[3px] border-gray-500 p-6 rounded-lg shadow-lg w-1/3 max-w-md h-96 overflow-y-auto">
-          <h2 className="text-3xl font-bold mb-4 text-center">Announcements</h2>
+        <div className="bg-white bg-opacity-90 border-[3px] border-gray-500 p-4 md:p-6 rounded-lg shadow-lg w-2/3 max-w-md h-96 overflow-y-auto">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center">Announcements</h2>
           <ul className="text-gray-800 space-y-4">
             {Notifications.map((notification, index) => (
               <li key={index} className="pb-2 border-b border-gray-500">
@@ -69,6 +70,7 @@ function Home() {
           </ul>
         </div>
       </div>
+
       <Footer />
     </div>
   );
