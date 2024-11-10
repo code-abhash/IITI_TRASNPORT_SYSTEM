@@ -1,18 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-# Create your models here.
+
 
 class User(AbstractUser):
     user_type=models.CharField(max_length=50)
-    email_id=models.EmailField(unique=True)
+    email_id=models.EmailField(unique=True, null=False)
 
-    def __str__(self):
+    def _str_(self):
         return f"{self.username},{self.first_name},{self.last_name}"
     
 class Student(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     
-    def __str__(self):
+    def _str_(self):
         return self.user.username
     
 class Department(models.Model):
@@ -25,15 +25,15 @@ class Faculty(models.Model):
     department_id = models.ForeignKey('Department', on_delete=models.CASCADE)
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     
-    def __str__(self):
+    def _str_(self):
         return self.user.username
     
 class Driver(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     phone_no=models.CharField(max_length=20)
+    
 
-
-    def __str__(self):
+    def _str_(self):
         return self.user.username
     
 class Vehicle(models.Model):
@@ -57,18 +57,18 @@ class Notifications(models.Model):
 class Bookings(models.Model):
     booking_id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    fare = models.DecimalField(max_digits=10, decimal_places=2)
-    status = models.CharField(max_length=100)
+    status = models.CharField(max_length=100, null=True)
     type_of_booking = models.CharField(max_length=100)
     contact_number = models.CharField(max_length=20)
-    source_of_funding = models.FileField(upload_to='funding_pdfs/', blank=True, null=True)
     any_specific_details=models.TextField()
+    name_user=models.CharField(max_length=100, null=True)
+
 
 # DEPARTURE DETAILS model
 class DepartureDetails(models.Model):
     departure_id = models.AutoField(primary_key=True)
     booking_id = models.ForeignKey(Bookings, on_delete=models.CASCADE)
-    vehicle_id = models.ForeignKey(Vehicle, on_delete=models.CASCADE)
+    vehicle_id = models.ForeignKey(Vehicle, on_delete=models.CASCADE, null=True)
     drop_off_location = models.CharField(max_length=255)
     pickup_location = models.CharField(max_length=255)
     date = models.DateField()
@@ -79,11 +79,9 @@ class DepartureDetails(models.Model):
 class ArrivalDetails(models.Model):
     arrival_id = models.AutoField(primary_key=True)
     booking_id = models.ForeignKey(Bookings, on_delete=models.CASCADE)
-    vehicle_id = models.ForeignKey(Vehicle, on_delete=models.CASCADE)
+    vehicle_id = models.ForeignKey(Vehicle, on_delete=models.CASCADE, null=True)
     drop_off_location = models.CharField(max_length=255)
     pickup_location = models.CharField(max_length=255)
     date = models.DateField()
     time = models.TimeField()
     type_of_vehicle = models.CharField(max_length=100)
-
-# NOTIFICATIONS model

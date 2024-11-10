@@ -67,17 +67,20 @@ class NotificationSerializer(serializers.ModelSerializer):
         model = Notifications
         fields = ['notification_id', 'admin_id', 'message', 'date']
 
+# Serializer for the Bookings model
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bookings
-        fields = ['booking_id', 'user_id', 'fare', 'status', 'type_of_booking', 'contact_number']
+        fields = ['booking_id', 'user_id', 'type_of_booking', 'contact_number', 'any_specific_details', 'name_user']
 
+# Serializer for the DepartureDetails model
 class DepartureDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = DepartureDetails
-        fields = ['departure_id', 'booking_id', 'vehicle_id', 'drop_off_location', 'pickup_location', 'date', 'time', 'type_of_vehicle']
+        fields = ['departure_id', 'booking_id', 'drop_off_location', 'pickup_location', 'date', 'time', 'type_of_vehicle']
 
+# Serializer for the ArrivalDetails model
 class ArrivalDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ArrivalDetails
-        fields = ['arrival_id', 'booking_id', 'vehicle_id', 'drop_off_location', 'pickup_location', 'date', 'time', 'type_of_vehicle']
+        fields = ['arrival_id', 'booking_id', 'drop_off_location', 'pickup_location', 'date', 'time', 'type_of_vehicle']
