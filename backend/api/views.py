@@ -5,6 +5,11 @@ from rest_framework.decorators import api_view
 from .models import User, Student, Department, Faculty, Driver, Vehicle, Notifications, Bookings, DepartureDetails, ArrivalDetails
 from api.serializers import *
 from rest_framework.response import Response
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
 
 
 class UserListCreateView(generics.ListCreateAPIView):
