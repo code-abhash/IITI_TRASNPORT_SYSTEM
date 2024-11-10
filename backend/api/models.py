@@ -68,11 +68,11 @@ class DepartureDetails(models.Model):
     departure_id = models.AutoField(primary_key=True)
     booking_id = models.ForeignKey(Bookings, on_delete=models.CASCADE)
     vehicle_id = models.ForeignKey(Vehicle, on_delete=models.CASCADE, null=True)
-    drop_off_location = models.CharField(max_length=255)
-    pickup_location = models.CharField(max_length=255)
-    date = models.DateField()
-    time = models.TimeField()
-    type_of_vehicle = models.CharField(max_length=100)
+    drop_off_location = models.CharField(max_length=255, null=True)
+    pickup_location = models.CharField(max_length=255, null=True)
+    date = models.DateField(null=True)
+    time = models.TimeField(null=True)
+    type_of_vehicle = models.CharField(max_length=100, null=True)
 
 # ARRIVAL DETAILS model
 class ArrivalDetails(models.Model):

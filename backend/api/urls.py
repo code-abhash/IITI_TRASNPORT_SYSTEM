@@ -17,6 +17,7 @@ urlpatterns = [
     path('drivers/', DriverListCreateView.as_view(), name='driver-list-create'),
     path('vehicles/', VehicleListCreateView.as_view(), name='vehicle-list-create'),
     path('bookings/', BookingView.as_view(), name='booking-list-create'),
+    path('bookingsprofile/', ProfileBookingView.as_view(), name='profile-booking'),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),

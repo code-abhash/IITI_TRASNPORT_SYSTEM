@@ -75,6 +75,22 @@ class NotificationView(APIView):
         except Notifications.DoesNotExist:
             return Response({"error": "Notification not found"}, status=status.HTTP_404_NOT_FOUND)
 
+class ProfileBookingView(APIView):
+    def get(self, request):
+        bookings = Bookings.objects.filter(user_id = request.user.id)
+        booking_data = []
+
+        for booking in bookings:
+            booking_serialized = BookingSerializer(booking).data
+
+            arrival_details = ArrivalDetails.objects.filter(booking_id=booking.booking_id)
+            departure_details = DepartureDetails.objects.filter(booking_id=booking.booking_id)
+            booking_serialized['arrival_details'] = ArrivalDetailsSerializer(arrival_details, many=True).data
+            booking_serialized['departure_details'] = DepartureDetailsSerializer(departure_details, many=True).data
+
+            booking_data.append(booking_serialized)
+
+        return Response(booking_data, status=status.HTTP_200_OK)
 
 class BookingView(APIView):
 
@@ -129,13 +145,14 @@ class BookingView(APIView):
                     return Response(arrival_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
                 # Save Departure Details
-                departure_data["booking_id"] = booking.booking_id
-                departure_serializer = DepartureDetailsSerializer(data=departure_data)
-                if departure_serializer.is_valid():
-                    departure_serializer.save()
-                else:
-                    transaction.set_rollback(True)
-                    return Response(departure_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                if departure_data["drop_off_location"] != '':
+                    departure_data["booking_id"] = booking.booking_id
+                    departure_serializer = DepartureDetailsSerializer(data=departure_data)        
+                    if departure_serializer.is_valid():
+                        departure_serializer.save()
+                    else:
+                        transaction.set_rollback(True)
+                        return Response(departure_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
                 return Response(booking_serializer.data, status=status.HTTP_201_CREATED)
             else:
