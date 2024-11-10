@@ -22,4 +22,5 @@ urlpatterns = [
     path('api/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('notifications/', NotificationView.as_view(), name='notification-list-create'),
+    path('notifications/<int:pk>/', NotificationView.as_view(), name='notification-detail'),  # For DELETE request
 ]

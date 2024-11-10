@@ -49,7 +49,6 @@ class Admin(models.Model):
 
 class Notifications(models.Model):
     notification_id = models.AutoField(primary_key=True)
-    admin_id = models.ForeignKey(Admin, on_delete=models.PROTECT)
     message = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
 

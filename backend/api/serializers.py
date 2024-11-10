@@ -65,7 +65,7 @@ class VehicleSerializer(serializers.ModelSerializer):
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notifications
-        fields = ['notification_id', 'admin_id', 'message', 'date']
+        fields = ['notification_id', 'message', 'date']
 
 # Serializer for the Bookings model
 class BookingSerializer(serializers.ModelSerializer):
