@@ -29,20 +29,23 @@ class Faculty(models.Model):
         return self.user.username
     
 class Driver(models.Model):
-    user=models.OneToOneField(User,on_delete=models.CASCADE)
-    phone_no=models.CharField(max_length=20)
-    
+    driver_id = models.AutoField(primary_key=True)  # ID for the driver, added by admin
+    phone_no = models.CharField(max_length=20)  # Driver's phone number
+    name = models.CharField(max_length=255)  # Optional: Name of the driver, added by admin
 
     def _str_(self):
-        return self.user.username
-    
+        return self.name  # Returning the name of the driver
+
 class Vehicle(models.Model):
-    driver=models.OneToOneField(Driver,on_delete=models.CASCADE)
-    vehicle_id = models.AutoField(primary_key=True)
-    type = models.CharField(max_length=100)
-    capacity = models.IntegerField()
-    vehicle_status = models.CharField(max_length=100)
-    vehicle_number = models.CharField(max_length=20)
+    vehicle_id = models.AutoField(primary_key=True)  # Unique vehicle ID
+    driver = models.ForeignKey(Driver, on_delete=models.CASCADE, related_name="vehicles")  # Assign a driver to the vehicle
+    type = models.CharField(max_length=100)  # Type of vehicle (e.g., Car, Bus, etc.)
+    capacity = models.IntegerField()  # Vehicle capacity
+    vehicle_status = models.CharField(max_length=100)  # Vehicle status (e.g., Available, In Use, etc.)
+    vehicle_number = models.CharField(max_length=20)  # Vehicle registration number
+
+    def _str_(self):
+        return f"{self.vehicle_number} - {self.type}"
 
 class Admin(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)

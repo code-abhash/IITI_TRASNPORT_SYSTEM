@@ -2,21 +2,21 @@ import React, { useState } from 'react';
 
 const AddDriverForm = () => {
   const [formData, setFormData] = useState({
-    user: '',
-    phone_no: '',
+    name: '',
+    phone_no: ''
   });
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/drivers/', {
+      const response = await fetch('http://127.0.0.1:8000/api/add_driver/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,8 +27,8 @@ const AddDriverForm = () => {
       if (response.ok) {
         alert('Driver added successfully');
         setFormData({
-          user: '',
-          phone_no: '',
+          name: '',
+          phone_no: ''
         });
       } else {
         alert('Failed to add driver');
@@ -40,22 +40,23 @@ const AddDriverForm = () => {
   };
 
   return (
-    <div>
-      <h1>Add New Driver</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-lg">
+      <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">Add Driver</h1>
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="user">User</label>
+          <label className="block text-gray-700 font-semibold mb-1">Name</label>
           <input
             type="text"
-            name="user"
-            value={formData.user}
+            name="name"
+            value={formData.name}
             onChange={handleChange}
-            placeholder="Enter user ID"
+            placeholder="Enter driver's name"
             required
+            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-gray-500"
           />
         </div>
         <div>
-          <label htmlFor="phone_no">Phone Number</label>
+          <label className="block text-gray-700 font-semibold mb-1">Phone Number</label>
           <input
             type="text"
             name="phone_no"
@@ -63,9 +64,15 @@ const AddDriverForm = () => {
             onChange={handleChange}
             placeholder="Enter phone number"
             required
+            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-gray-500"
           />
         </div>
-        <button type="submit">Add Driver</button>
+        <button
+          type="submit"
+          className="w-full bg-gray-800 text-white font-semibold py-2 px-4 rounded hover:bg-gray-700 focus:outline-none"
+        >
+          Add Driver
+        </button>
       </form>
     </div>
   );

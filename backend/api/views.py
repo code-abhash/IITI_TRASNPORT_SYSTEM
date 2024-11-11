@@ -158,3 +158,31 @@ class BookingView(APIView):
             else:
                 return Response(booking_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# View to add a driver
+@api_view(['POST'])  # Only handle POST requests
+def add_driver(request):
+    if request.method == 'POST':
+        serializer = DriverSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)  # Respond with created data
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  # Handle invalid data
+
+    # Handle other HTTP methods like GET or PUT if needed (optional)
+    return Response({"message": "Method not allowed"}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+# Add a new vehicle
+@api_view(['POST'])
+def add_vehicle(request):
+    if request.method == 'POST':
+        serializer = VehicleSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def get_drivers(request):
+    drivers = Driver.objects.all()
+    serializer = DriverSerializer(drivers, many=True)
+    return Response(serializer.data)

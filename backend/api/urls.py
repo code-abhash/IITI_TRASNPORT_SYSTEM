@@ -24,4 +24,7 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('notifications/', NotificationView.as_view(), name='notification-list-create'),
     path('notifications/<int:pk>/', NotificationView.as_view(), name='notification-detail'),  # For DELETE request
+    path('add_driver/', add_driver, name='add_driver'),
+    path('add_vehicle/', add_vehicle, name='add_vehicle'),
+    path('get_drivers/', get_drivers, name='get_drivers'),
 ]

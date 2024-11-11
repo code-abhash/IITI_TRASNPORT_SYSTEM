@@ -55,8 +55,9 @@ class FacultySerializer(serializers.ModelSerializer):
 class DriverSerializer(serializers.ModelSerializer):
     class Meta:
         model = Driver
-        fields = ['id', 'user', 'phone_no']
+        fields = ['driver_id', 'name', 'phone_no']
 
+# Vehicle Serializer
 class VehicleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vehicle

@@ -11,16 +11,17 @@ function ViewBookings() {
     const fetchBookings = async () => {
       try {
         const response = await axios.get('http://127.0.0.1:8000/api/bookings');
+        console.log("bookings fetched")
+        console.log(bookings)
         setBookings(response.data);
       } catch (error) {
         console.error('Error fetching bookings:', error);
       }
+
     };
 
     fetchBookings();
   }, []); // Empty dependency array to run once on component mount
-  console.log(bookings)
-  console.log(bookings[0].arrival_details[0].date)
   return (
     <>
       <div className="relative flex flex-col min-h-screen bg-gray-50">
