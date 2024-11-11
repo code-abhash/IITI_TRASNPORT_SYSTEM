@@ -91,6 +91,7 @@ const Profile = () => {
                         
                         {/* Arrival Details */}
                         <p><strong>Arrival:</strong></p>
+                        {booking.arrival_details && booking.arrival_details.length > 0 ? (
                         <ul>
                           <li>Date: {booking.arrival_details[0].date}</li>
                           <li>Time: {booking.arrival_details[0].time}</li>
@@ -98,6 +99,9 @@ const Profile = () => {
                           <li>Drop-off Location: {booking.arrival_details[0].drop_off_location}</li>
                           <li>Vehicle Type: {booking.arrival_details[0].type_of_vehicle}</li>
                         </ul>
+                        ) : (
+                          <p>No arrival details available.</p>
+                        )}
                         <button
                           onClick={() => fetchDriverDetailsArrival(booking.arrival_details[0].arrival_id)}
                           className="mt-2 bg-green-600 text-white font-bold py-1 px-4 rounded hover:bg-green-700"

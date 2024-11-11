@@ -136,13 +136,14 @@ class BookingView(APIView):
                 booking = booking_serializer.save()
 
                 # Save Arrival Details
-                arrival_data["booking_id"] = booking.booking_id
-                arrival_serializer = ArrivalDetailsSerializer(data=arrival_data)
-                if arrival_serializer.is_valid():
-                    arrival_serializer.save()
-                else:
-                    transaction.set_rollback(True)
-                    return Response(arrival_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                if arrival_data["drop_off_location"] != '':
+                    arrival_data["booking_id"] = booking.booking_id
+                    arrival_serializer = ArrivalDetailsSerializer(data=arrival_data)
+                    if arrival_serializer.is_valid():
+                        arrival_serializer.save()
+                    else:
+                        transaction.set_rollback(True)
+                        return Response(arrival_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
                 # Save Departure Details
                 if departure_data["drop_off_location"] != '':
@@ -194,10 +195,6 @@ def confirm_booking(request):
         status_update = request.data.get('status', 'confirmed')
         arrival_vehicle_id = request.data.get('arrival_vehicle_id')
         departure_vehicle_id = request.data.get('departure_vehicle_id')
-        print(booking_id)
-        print(status_update)
-        print(arrival_vehicle_id)
-        print(departure_vehicle_id)
 
         # Fetch the booking object
         booking = Bookings.objects.get(booking_id=booking_id)
@@ -206,33 +203,37 @@ def confirm_booking(request):
         booking.status = status_update
         booking.save()
         
-        # Update arrival details
-        arrival_details = ArrivalDetails.objects.get(booking_id=booking_id)
-        if arrival_vehicle_id:
-            arrival_vehicle = Vehicle.objects.get(vehicle_id=arrival_vehicle_id)
-            arrival_details.vehicle_id = arrival_vehicle
-            arrival_details.save()
+        # Update arrival details, if they exist
+        try:
+            arrival_details = ArrivalDetails.objects.get(booking_id=booking_id)
+            if arrival_vehicle_id:
+                arrival_vehicle = Vehicle.objects.get(vehicle_id=arrival_vehicle_id)
+                arrival_details.vehicle_id = arrival_vehicle
+                arrival_details.save()
+        except ArrivalDetails.DoesNotExist:
+            # Skip updating arrival details if they don't exist
+            pass
         
-        # Update departure details
-        departure_details = DepartureDetails.objects.get(booking_id=booking_id)
-        if departure_details:
+        # Update departure details, if they exist
+        try:
+            departure_details = DepartureDetails.objects.get(booking_id=booking_id)
             if departure_vehicle_id:
                 departure_vehicle = Vehicle.objects.get(vehicle_id=departure_vehicle_id)
                 departure_details.vehicle_id = departure_vehicle
                 departure_details.save()
+        except DepartureDetails.DoesNotExist:
+            # Skip updating departure details if they don't exist
+            pass
         
         return Response({"message": "Booking confirmed and vehicle IDs updated successfully."}, status=status.HTTP_200_OK)
     
     except Bookings.DoesNotExist:
         return Response({"error": "Booking not found."}, status=status.HTTP_404_NOT_FOUND)
-    except ArrivalDetails.DoesNotExist:
-        return Response({"error": "Arrival details not found."}, status=status.HTTP_404_NOT_FOUND)
-    except DepartureDetails.DoesNotExist:
-        return Response({"error": "Departure details not found."}, status=status.HTTP_404_NOT_FOUND)
     except Vehicle.DoesNotExist:
         return Response({"error": "Vehicle not found."}, status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['POST'])
 def getDriverDetailsArrival(request):
@@ -257,13 +258,17 @@ def getDriverDetailsArrival(request):
 def getDriverDetailsDeparture(request):
     departure_id = request.data.get('departure_id')
     departure = DepartureDetails.objects.get(departure_id=departure_id)
+    print(departure)
     vehicle_id = departure.vehicle_id.vehicle_id
     vehicle = Vehicle.objects.get(vehicle_id=vehicle_id)
+    print(vehicle_id)
     driver_id = vehicle.driver_id
+    print(driver_id)
     driver = Driver.objects.get(driver_id=driver_id)
     name = driver.name
     number = driver.phone_no
     driver_details = []
     driver_details.append(name)
     driver_details.append(number)
+    print(driver_details)
     return Response(driver_details, status=status.HTTP_200_OK)

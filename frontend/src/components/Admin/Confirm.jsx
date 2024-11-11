@@ -8,6 +8,7 @@ function ViewBookings() {
   const [vehicles, setVehicles] = useState([]);
   const [arrivalVehicleId, setArrivalVehicleId] = useState();
   const [departureVehicleId, setDepartureVehicleId] = useState();
+
   // Fetch bookings and vehicles from API
   useEffect(() => {
     const fetchBookings = async () => {
@@ -43,6 +44,18 @@ function ViewBookings() {
       alert('Booking confirmed and vehicles assigned!');
     } catch (error) {
       console.error('Error updating booking:', error);
+    }
+  };
+
+  const handleRejectBooking = async (bookingId) => {
+    try {
+      await axios.post('http://127.0.0.1:8000/api/update_booking/', {
+        booking_id: bookingId,
+        status: 'rejected',
+      });
+      alert('Booking rejected.');
+    } catch (error) {
+      console.error('Error rejecting booking:', error);
     }
   };
 
@@ -115,6 +128,14 @@ function ViewBookings() {
                       className="mt-4 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
                     >
                       Confirm Booking
+                    </button>
+
+                    {/* Reject Booking Button */}
+                    <button
+                      onClick={() => handleRejectBooking(booking.booking_id)}
+                      className="mt-4 bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700"
+                    >
+                      Reject Booking
                     </button>
                   </div>
                 </div>
