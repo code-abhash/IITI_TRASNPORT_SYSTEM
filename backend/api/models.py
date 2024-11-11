@@ -59,7 +59,7 @@ class Notifications(models.Model):
 class Bookings(models.Model):
     booking_id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    status = models.CharField(max_length=100, null=True)
+    status = models.CharField(max_length=100, null=True, default="Pending")
     type_of_booking = models.CharField(max_length=100)
     contact_number = models.CharField(max_length=20)
     any_specific_details=models.TextField()

@@ -72,7 +72,7 @@ class NotificationSerializer(serializers.ModelSerializer):
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bookings
-        fields = ['booking_id', 'user_id', 'type_of_booking', 'contact_number', 'any_specific_details', 'name_user']
+        fields = ['booking_id', 'user_id', 'type_of_booking', 'contact_number', 'any_specific_details', 'name_user', 'status']
 
 # Serializer for the DepartureDetails model
 class DepartureDetailsSerializer(serializers.ModelSerializer):

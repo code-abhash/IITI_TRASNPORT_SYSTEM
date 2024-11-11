@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import profilePic from '../../assets/profile_pic.png'; // Replace with your actual profile picture
-import img2 from '../../assets/slide_pic_2.jpg';
 import api from '../../api'; // Import the api instance
-
 
 const Profile = () => {
   const [viewDetails, setViewDetails] = useState(null); // Track which booking details are being viewed
   const [bookings, setBookings] = useState([]);
+  const [driverDetailsArrival, setDriverDetailsArrival] = useState({});
+  const [driverDetailsDeparture, setDriverDetailsDeparture] = useState({});
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -23,9 +23,33 @@ const Profile = () => {
         console.error('Error fetching bookings:', error);
       }
     };
-
+    
     fetchBookings();
   }, []);
+
+  const fetchDriverDetailsArrival = async (arrivalId, bookingId) => {
+    try {
+      const response = await api.post('http://127.0.0.1:8000/api/driver_details_arrival/', { arrival_id: arrivalId });
+      setDriverDetailsArrival(prevState => ({
+        ...prevState,
+        [bookingId]: response.data
+      }));
+    } catch (error) {
+      console.error('Error fetching arrival driver details:', error);
+    }
+  };
+
+  const fetchDriverDetailsDeparture = async (departureId, bookingId) => {
+    try {
+      const response = await api.post('http://127.0.0.1:8000/api/driver_details_departure/', { departure_id: departureId });
+      setDriverDetailsDeparture(prevState => ({
+        ...prevState,
+        [bookingId]: response.data
+      }));
+    } catch (error) {
+      console.error('Error fetching departure driver details:', error);
+    }
+  };
 
   return (
     <>
@@ -56,8 +80,10 @@ const Profile = () => {
                     <h3 className="text-xl font-bold text-gray-800">Booking {index + 1}</h3>
                     {viewDetails === index ? (
                       <div className="text-gray-700 mt-2">
-                        <p><strong>Status:</strong> Pending(Hardcoded) Also update driver and vehicle details when confirmed </p>
+                        <p><strong>Status:</strong> {booking.status} </p>
                         <p><strong>Type of Booking:</strong> {booking.type_of_booking}</p>
+                        
+                        {/* Arrival Details */}
                         <p><strong>Arrival:</strong></p>
                         <ul>
                           <li>Date: {booking.arrival_details[0].date}</li>
@@ -66,9 +92,21 @@ const Profile = () => {
                           <li>Drop-off Location: {booking.arrival_details[0].drop_off_location}</li>
                           <li>Vehicle Type: {booking.arrival_details[0].type_of_vehicle}</li>
                         </ul>
+                        <button
+                          onClick={() => fetchDriverDetailsArrival(booking.arrival_details[0].arrival_id, booking.id)}
+                          className="mt-2 bg-green-600 text-white font-bold py-1 px-4 rounded hover:bg-green-700"
+                        >
+                          Get Arrival Driver Details
+                        </button>
+                        {driverDetailsArrival[booking.id] && (
+                          <div>
+                            <p><strong>Driver Name:</strong> {driverDetailsArrival[booking.id][0]}</p>
+                            <p><strong>Driver Contact:</strong> {driverDetailsArrival[booking.id][1]}</p>
+                          </div>
+                        )}
 
+                        {/* Departure Details */}
                         <p><strong>Departure:</strong></p>
-                        {/* Check if departure details exist */}
                         {booking.departure_details && booking.departure_details.length > 0 ? (
                           <ul>
                             <li>Date: {booking.departure_details[0].date}</li>
@@ -79,6 +117,18 @@ const Profile = () => {
                           </ul>
                         ) : (
                           <p>No departure details available.</p>
+                        )}
+                        <button
+                          onClick={() => fetchDriverDetailsDeparture(booking.departure_details[0].departure_id, booking.id)}
+                          className="mt-2 bg-green-600 text-white font-bold py-1 px-4 rounded hover:bg-green-700"
+                        >
+                          Get Departure Driver Details
+                        </button>
+                        {driverDetailsDeparture[booking.id] && (
+                          <div>
+                            <p><strong>Driver Name:</strong> {driverDetailsDeparture[booking.id][0]}</p>
+                            <p><strong>Driver Contact:</strong> {driverDetailsDeparture[booking.id][1]}</p>
+                          </div>
                         )}
 
                         <button
