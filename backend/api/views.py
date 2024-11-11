@@ -215,10 +215,11 @@ def confirm_booking(request):
         
         # Update departure details
         departure_details = DepartureDetails.objects.get(booking_id=booking_id)
-        if departure_vehicle_id:
-            departure_vehicle = Vehicle.objects.get(vehicle_id=departure_vehicle_id)
-            departure_details.vehicle_id = departure_vehicle
-            departure_details.save()
+        if departure_details:
+            if departure_vehicle_id:
+                departure_vehicle = Vehicle.objects.get(vehicle_id=departure_vehicle_id)
+                departure_details.vehicle_id = departure_vehicle
+                departure_details.save()
         
         return Response({"message": "Booking confirmed and vehicle IDs updated successfully."}, status=status.HTTP_200_OK)
     
@@ -256,7 +257,7 @@ def getDriverDetailsArrival(request):
 def getDriverDetailsDeparture(request):
     departure_id = request.data.get('departure_id')
     departure = DepartureDetails.objects.get(departure_id=departure_id)
-    vehicle_id = departure.vehicle_id
+    vehicle_id = departure.vehicle_id.vehicle_id
     vehicle = Vehicle.objects.get(vehicle_id=vehicle_id)
     driver_id = vehicle.driver_id
     driver = Driver.objects.get(driver_id=driver_id)

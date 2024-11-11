@@ -7,8 +7,10 @@ import api from '../../api'; // Import the api instance
 const Profile = () => {
   const [viewDetails, setViewDetails] = useState(null); // Track which booking details are being viewed
   const [bookings, setBookings] = useState([]);
-  const [driverDetailsArrival, setDriverDetailsArrival] = useState({});
-  const [driverDetailsDeparture, setDriverDetailsDeparture] = useState({});
+  const [driverDetailsArrival, setDriverDetailsArrival] = useState(null);
+  const [driverDetailsDeparture, setDriverDetailsDeparture] = useState(null);
+  const [showArrivalDetails, setShowArrivalDetails] = useState(false);
+  const [showDepartureDetails, setShowDepartureDetails] = useState(false);
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -27,28 +29,32 @@ const Profile = () => {
     fetchBookings();
   }, []);
 
-  const fetchDriverDetailsArrival = async (arrivalId, bookingId) => {
+  const fetchDriverDetailsArrival = async (arrivalId) => {
     try {
       const response = await api.post('http://127.0.0.1:8000/api/driver_details_arrival/', { arrival_id: arrivalId });
-      setDriverDetailsArrival(prevState => ({
-        ...prevState,
-        [bookingId]: response.data
-      }));
+      setDriverDetailsArrival(response.data);
+      setShowArrivalDetails(true);
     } catch (error) {
       console.error('Error fetching arrival driver details:', error);
     }
   };
 
-  const fetchDriverDetailsDeparture = async (departureId, bookingId) => {
+  const fetchDriverDetailsDeparture = async (departureId) => {
     try {
       const response = await api.post('http://127.0.0.1:8000/api/driver_details_departure/', { departure_id: departureId });
-      setDriverDetailsDeparture(prevState => ({
-        ...prevState,
-        [bookingId]: response.data
-      }));
+      setDriverDetailsDeparture(response.data);
+      setShowDepartureDetails(true);
     } catch (error) {
       console.error('Error fetching departure driver details:', error);
     }
+  };
+
+  const handleViewDetails = (index) => {
+    setViewDetails(index);
+    setDriverDetailsArrival(null);
+    setDriverDetailsDeparture(null);
+    setShowArrivalDetails(false);
+    setShowDepartureDetails(false);
   };
 
   return (
@@ -93,15 +99,21 @@ const Profile = () => {
                           <li>Vehicle Type: {booking.arrival_details[0].type_of_vehicle}</li>
                         </ul>
                         <button
-                          onClick={() => fetchDriverDetailsArrival(booking.arrival_details[0].arrival_id, booking.id)}
+                          onClick={() => fetchDriverDetailsArrival(booking.arrival_details[0].arrival_id)}
                           className="mt-2 bg-green-600 text-white font-bold py-1 px-4 rounded hover:bg-green-700"
                         >
                           Get Arrival Driver Details
                         </button>
-                        {driverDetailsArrival[booking.id] && (
+                        {showArrivalDetails && driverDetailsArrival && (
                           <div>
-                            <p><strong>Driver Name:</strong> {driverDetailsArrival[booking.id][0]}</p>
-                            <p><strong>Driver Contact:</strong> {driverDetailsArrival[booking.id][1]}</p>
+                            <p><strong>Driver Name:</strong> {driverDetailsArrival[0]}</p>
+                            <p><strong>Driver Contact:</strong> {driverDetailsArrival[1]}</p>
+                            <button
+                              onClick={() => setShowArrivalDetails(false)}
+                              className="mt-2 bg-red-600 text-white font-bold py-1 px-4 rounded hover:bg-red-700"
+                            >
+                              Hide Arrival Driver Details
+                            </button>
                           </div>
                         )}
 
@@ -119,21 +131,27 @@ const Profile = () => {
                           <p>No departure details available.</p>
                         )}
                         <button
-                          onClick={() => fetchDriverDetailsDeparture(booking.departure_details[0].departure_id, booking.id)}
+                          onClick={() => fetchDriverDetailsDeparture(booking.departure_details[0].departure_id)}
                           className="mt-2 bg-green-600 text-white font-bold py-1 px-4 rounded hover:bg-green-700"
                         >
                           Get Departure Driver Details
                         </button>
-                        {driverDetailsDeparture[booking.id] && (
+                        {showDepartureDetails && driverDetailsDeparture && (
                           <div>
-                            <p><strong>Driver Name:</strong> {driverDetailsDeparture[booking.id][0]}</p>
-                            <p><strong>Driver Contact:</strong> {driverDetailsDeparture[booking.id][1]}</p>
+                            <p><strong>Driver Name:</strong> {driverDetailsDeparture[0]}</p>
+                            <p><strong>Driver Contact:</strong> {driverDetailsDeparture[1]}</p>
+                            <button
+                              onClick={() => setShowDepartureDetails(false)}
+                              className="mt-2 bg-red-600 text-white font-bold py-1 px-4 rounded hover:bg-red-700"
+                            >
+                              Hide Departure Driver Details
+                            </button>
                           </div>
                         )}
 
                         <button
                           className="mt-2 bg-red-600 text-white font-bold py-1 px-4 rounded hover:bg-red-700"
-                          onClick={() => setViewDetails(null)}
+                          onClick={() => handleViewDetails(null)}
                         >
                           Hide Details
                         </button>
@@ -141,7 +159,7 @@ const Profile = () => {
                     ) : (
                       <button
                         className="mt-2 bg-blue-600 text-white font-bold py-1 px-4 rounded hover:bg-blue-700"
-                        onClick={() => setViewDetails(index)}
+                        onClick={() => handleViewDetails(index)}
                       >
                         View Details
                       </button>
