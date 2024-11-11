@@ -4,7 +4,7 @@ import img1 from '../../assets/slide_pic_1.png';
 import img2 from '../../assets/slide_pic_2.jpg';
 import img3 from '../../assets/slide_pic_3.png';
 import Footer from '../Footer/Footer';
-import axios from 'axios'; // Import axios
+import api from '../../api'; // Import the api instance
 
 function Home() {
   const images = [img1, img2, img3];
@@ -15,7 +15,7 @@ function Home() {
     // Fetch announcements on component mount
     const fetchAnnouncements = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/notifications/');
+        const response = await api.get('/notifications/');
         setAnnouncements(response.data); // Set the fetched announcements to state
       } catch (error) {
         console.error('Error fetching announcements:', error);

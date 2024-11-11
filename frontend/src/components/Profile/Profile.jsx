@@ -3,19 +3,18 @@ import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import profilePic from '../../assets/profile_pic.png'; // Replace with your actual profile picture
 import img2 from '../../assets/slide_pic_2.jpg';
-import axios from 'axios';
+import api from '../../api'; // Import the api instance
+
 
 const Profile = () => {
   const [viewDetails, setViewDetails] = useState(null); // Track which booking details are being viewed
-  const token = localStorage.getItem('token');
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/bookingsprofile/', {
+        const response = await api.get('http://127.0.0.1:8000/api/bookingsprofile/', {
           headers: {
-            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
           },
         });

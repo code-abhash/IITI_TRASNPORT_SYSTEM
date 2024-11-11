@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
-import axios from 'axios';
+import api from '../../api'; // Import the api instance
 
 function ViewBookings() {
   const [bookings, setBookings] = useState([]);
@@ -10,7 +10,7 @@ function ViewBookings() {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/bookings');
+        const response = await api.get('/bookings/');
         console.log("bookings fetched")
         console.log(bookings)
         setBookings(response.data);
@@ -80,15 +80,16 @@ function ViewBookings() {
                       <p><strong>Vehicle Type:</strong> {booking.arrival_details[0].type_of_vehicle}</p>
                     </div>
 
-                    {/* Departure Details */}
-                    <div>
-                      <h3 className="font-bold">Departure Details</h3>
-                      <p><strong>Date:</strong> {booking.departure_details[0].date}</p>
-                      <p><strong>Time:</strong> {booking.departure_details[0].time}</p>
-                      <p><strong>Pick-up Location:</strong> {booking.departure_details[0].pickup_location}</p>
-                      <p><strong>Drop-off Location:</strong> {booking.departure_details[0].drop_off_location}</p>
-                      <p><strong>Vehicle Type:</strong> {booking.departure_details[0].type_of_vehicle}</p>
-                    </div>
+                    {booking.departure_details && booking.departure_details.length > 0 && (
+                      <div>
+                        <h3 className="font-bold">Departure Details</h3>
+                        <p><strong>Date:</strong> {booking.departure_details[0].date}</p>
+                        <p><strong>Time:</strong> {booking.departure_details[0].time}</p>
+                        <p><strong>Pick-up Location:</strong> {booking.departure_details[0].pickup_location}</p>
+                        <p><strong>Drop-off Location:</strong> {booking.departure_details[0].drop_off_location}</p>
+                        <p><strong>Vehicle Type:</strong> {booking.departure_details[0].type_of_vehicle}</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))

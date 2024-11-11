@@ -5,7 +5,8 @@ import img1 from '../../assets/slide_pic_1.png';
 import img2 from '../../assets/slide_pic_2.jpg';
 import img3 from '../../assets/slide_pic_3.png';
 import { Link } from 'react-router-dom';
-import axios from 'axios'; // Import axios
+import api from '../../api'; // Import the api instance
+
 
 function Admin() {
   const images = [img1, img2, img3];
@@ -14,7 +15,7 @@ function Admin() {
   const [newAnnouncement, setNewAnnouncement] = useState('');
   const fetchAnnouncements = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/notifications/');
+      const response = await api.get('/notifications/');
       setAnnouncements(response.data); // Set the fetched announcements to state
     } catch (error) {
       console.error('Error fetching announcements:', error);
@@ -41,7 +42,7 @@ function Admin() {
 
       try {
         // Post the new announcement to the backend
-        const response = await axios.post('http://127.0.0.1:8000/api/notifications/', newAnnouncementObj);
+        const response = await api.post('/notifications/', newAnnouncementObj);
 
         // Update local state after adding the new announcement
         setAnnouncements([response.data, ...announcements]);
@@ -56,7 +57,7 @@ function Admin() {
   const handleDeleteAnnouncement = async (id) => {
     try {
       // Send a delete request to the backend for the specific announcement
-      await axios.delete(`http://127.0.0.1:8000/api/notifications/${id}/`);
+      await api.delete(`/notifications/${id}/`);
 
       // Update local state to remove the announcement
       setAnnouncements(announcements.filter(announcement => announcement.id !== id));
