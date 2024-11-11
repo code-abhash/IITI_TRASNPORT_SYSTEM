@@ -1,23 +1,17 @@
 import React, { useState } from 'react';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
-import axios from 'axios';
+import api from '../../api'; // Import the api instance
 import img2 from '../../assets/slide_pic_2.jpg';
-import { Notyf } from 'notyf';
-import 'notyf/notyf.min.css'; 
-import { useNavigate } from 'react-router-dom';
 
 function BookingForm() {
   // Define states for each form section
-  const navigate=useNavigate();
-  const token = localStorage.getItem('token');
   const [personalDetails, setPersonalDetails] = useState({
     name_user: '',
     type_of_booking: '',
     contact_number: '',
     any_specific_details: ''
   });
-  const notyf = new Notyf();
   
   const [arrivalDetails, setArrivalDetails] = useState({
     date: '',
@@ -69,20 +63,14 @@ function BookingForm() {
     // }
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/bookings/', bookingData, {
+      const response = await api.post('/bookings/', bookingData, {
         headers: {
-          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
       });
       console.log('Booking created:', response.data);
-      notyf.success('Booking COnfirmed')
-      setTimeout(() => {
-        navigate('/profile')
-      }, 1000);
     } catch (error) {
       console.error('Error creating booking:', error.response?.data);
-      notyf.error('Booking failed',error)
     }
   };
 
