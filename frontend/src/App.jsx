@@ -11,7 +11,7 @@ import PrivateRoutes from './components/PrivateRoutes/PrivateRoutes';
 import Admin from './components/Admin/Admin';
 import ViewBookings from './components/Admin/Confirm';
 import AddDriverForm from './components/Driver/Driver';
-import AddVehicleForm from './components/Driver/Vehicle';
+import VehicleList from './components/Driver/VehicleList';
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/Confirm" element={<ViewBookings />} />
           <Route path="/Driver" element={<AddDriverForm/>} />
-          <Route path="/Vehicle" element={< AddVehicleForm/>} />
+          <Route path="/Vehicle" element={< VehicleList/>} />
 
           <Route path="/signup" element={<Register />} />
           <Route path="/login" element={<Login />} />

@@ -47,9 +47,11 @@ class DriverListCreateView(generics.ListCreateAPIView):
     queryset = Driver.objects.all()
     serializer_class = DriverSerializer
 
-class VehicleListCreateView(generics.ListCreateAPIView):
-    queryset = Vehicle.objects.all()
-    serializer_class = VehicleSerializer
+class VehicleListView(APIView):
+    def get(self, request):
+        vehicles = Vehicle.objects.all()
+        serializer = VehicleSerializer(vehicles, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 
@@ -272,3 +274,18 @@ def getDriverDetailsDeparture(request):
     driver_details.append(number)
     print(driver_details)
     return Response(driver_details, status=status.HTTP_200_OK)
+
+@api_view(['PUT'])
+def update_vehicle(request, vehicle_id):
+    try:
+        vehicle = Vehicle.objects.get(vehicle_id=vehicle_id)
+    except Vehicle.DoesNotExist:
+        return Response({'detail': 'Vehicle not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    # Deserialize the incoming request data and validate it
+    serializer = VehicleSerializer(vehicle, data=request.data)
+    if serializer.is_valid():
+        # Save the updated vehicle data to the database
+        serializer.save()
+        return Response({'detail': 'Vehicle updated successfully'}, status=status.HTTP_200_OK)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
