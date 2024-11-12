@@ -153,9 +153,8 @@ function Register() {
                   value={formData.user_type} 
                   onChange={handleChange} 
                   className="w-full p-2 border border-gray-300 rounded"
+                  required
                 >
-                  <option value="user">--USER--</option>
-                  <option value="driver">Driver</option>
                   <option value="student">Student</option>
                   <option value="faculty">Faculty</option>
                 </select>

@@ -13,7 +13,18 @@ const Profile = () => {
   const [driverDetailsDeparture, setDriverDetailsDeparture] = useState(null);
   const [showArrivalDetails, setShowArrivalDetails] = useState(false);
   const [showDepartureDetails, setShowDepartureDetails] = useState(false);
-
+  function extractRollNumber(email) {
+    // Regular expression to match the roll number after the course code
+    const regex = /\d{9}/;
+    const match = email.match(regex);
+    
+    // If the email matches the pattern, return the roll number part
+    if (match) {
+      return match[0]; // match[0] will contain the roll number (9 digits)
+    } else {
+      return null; // Return null if no roll number is found
+    }
+  }
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
@@ -73,7 +84,7 @@ const Profile = () => {
     setShowArrivalDetails(false);
     setShowDepartureDetails(false);
   };
-
+  const rollNumber = userDetails ? extractRollNumber(userDetails[1]) : null;
   return (
     <>
       <div className="relative min-h-screen w-full set_background_image">
@@ -88,7 +99,7 @@ const Profile = () => {
           <div className="flex flex-col md:flex-row gap-6 w-full max-w-5xl">
             {/* Sidebar */}
             <div className="bg-white bg-opacity-90 border-[3px] border-gray-500 p-6 rounded-lg shadow-lg w-full max-w-sm flex flex-col justify-center items-center">
-              <img src={profilePic} alt="Profile" className="w-32 h-32 rounded-full mx-auto mb-4" />
+              <img src={`https://cse.iiti.ac.in/stu_pics/btech_2023/${rollNumber}.jpg`} alt="Profile" className="w-32 h-32 rounded-full mx-auto mb-4" />
               <h2 className="text-2xl font-bold text-gray-800 mb-2">{userDetails ? userDetails[0] : 'Loading...'}</h2>
               <p className="text-gray-700 text-xl mb-4">{userDetails ? userDetails[2] : 'Loading...'}</p>
               <p className="text-gray-600 mb-4">{userDetails ? userDetails[1] : 'Loading...'}</p>
