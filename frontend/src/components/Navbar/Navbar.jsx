@@ -22,7 +22,9 @@ function Navbar() {
   return (
     <div className="h-24 w-full bg-gray-900 flex items-center justify-between px-8">
       <div className="flex items-center">
+      <NavLink to="/">
         <img src={logo} className="h-16 w-4/5 md:w-full" alt="IITI Logo" />
+      </NavLink>
       </div>
       <div className="lg:hidden flex items-center">
         <button onClick={toggleMenu} className="text-white focus:outline-none">

@@ -2,6 +2,8 @@ from rest_framework import serializers
 from api.models import *
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
+from django.core.mail import send_mail
+from django.conf import settings
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -18,6 +20,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         data['user_type'] = self.user.user_type
         data['email'] = self.user.email
         return data
+    
 
 class UserSerializer(serializers.ModelSerializer):
     cnf_password = serializers.CharField(write_only=True)
@@ -35,6 +38,13 @@ class UserSerializer(serializers.ModelSerializer):
         user = User(**validated_data)
         user.set_password(validated_data['password'])
         user.save()
+        send_mail(
+            'Welcome to Our Platform!',
+            f'Hello {user.username}, thank you for signing up!',
+            settings.EMAIL_HOST_USER,
+            [user.email_id],
+            fail_silently=False,
+        )
         return user
 
 class StudentSerializer(serializers.ModelSerializer):
@@ -55,8 +65,9 @@ class FacultySerializer(serializers.ModelSerializer):
 class DriverSerializer(serializers.ModelSerializer):
     class Meta:
         model = Driver
-        fields = ['id', 'user', 'phone_no']
+        fields = ['driver_id', 'name', 'phone_no']
 
+# Vehicle Serializer
 class VehicleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vehicle
@@ -65,19 +76,22 @@ class VehicleSerializer(serializers.ModelSerializer):
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notifications
-        fields = ['notification_id', 'admin_id', 'message', 'date']
+        fields = ['notification_id', 'message', 'date']
 
+# Serializer for the Bookings model
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bookings
-        fields = ['booking_id', 'user_id', 'fare', 'status', 'type_of_booking', 'contact_number']
+        fields = ['booking_id', 'user_id', 'type_of_booking', 'contact_number', 'any_specific_details', 'name_user', 'status']
 
+# Serializer for the DepartureDetails model
 class DepartureDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = DepartureDetails
-        fields = ['departure_id', 'booking_id', 'vehicle_id', 'drop_off_location', 'pickup_location', 'date', 'time', 'type_of_vehicle']
+        fields = ['departure_id', 'booking_id', 'drop_off_location', 'pickup_location', 'date', 'time', 'type_of_vehicle']
 
+# Serializer for the ArrivalDetails model
 class ArrivalDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ArrivalDetails
-        fields = ['arrival_id', 'booking_id', 'vehicle_id', 'drop_off_location', 'pickup_location', 'date', 'time', 'type_of_vehicle']
+        fields = ['arrival_id', 'booking_id', 'drop_off_location', 'pickup_location', 'date', 'time', 'type_of_vehicle']

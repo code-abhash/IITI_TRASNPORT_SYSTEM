@@ -4,37 +4,34 @@ import img1 from '../../assets/slide_pic_1.png';
 import img2 from '../../assets/slide_pic_2.jpg';
 import img3 from '../../assets/slide_pic_3.png';
 import Footer from '../Footer/Footer';
+import api from '../../api'; // Import the api instance
 
 function Home() {
   const images = [img1, img2, img3];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [announcements, setAnnouncements] = useState([]);
 
   useEffect(() => {
+    // Fetch announcements on component mount
+    const fetchAnnouncements = async () => {
+      try {
+        const response = await api.get('/notifications/');
+        setAnnouncements(response.data); // Set the fetched announcements to state
+      } catch (error) {
+        console.error('Error fetching announcements:', error);
+      }
+    };
+
+    fetchAnnouncements();
+
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) =>
         prevIndex === images.length - 1 ? 0 : prevIndex + 1
       );
     }, 3000);
+
     return () => clearInterval(interval);
   }, [images.length]);
-
-  const Notifications = [
-    "Bus timings updated for route A",
-    "New shuttle added for route B.",
-    "Weekend service timings have changed.",
-    "Maintenance scheduled for the main bus depot.",
-    "Traffic delays expected on route C.",
-    "New student discount on monthly passes.",
-    "Extra buses added during exam week.",
-    "Masks required on all transport services.",
-    "Route D service is temporarily suspended.",
-    "Holiday schedule will be in effect next week.",
-    "Limited seats available on Route E.",
-    "Night shuttle services extended until midnight.",
-    "Transport survey - provide your feedback!",
-    "COVID-19 guidelines updated.",
-    "Express shuttle added from main gate.",
-  ];
 
   return (
     <div className="relative w-full h-screen">
@@ -62,9 +59,10 @@ function Home() {
         <div className="bg-white bg-opacity-90 border-[3px] border-gray-500 p-4 md:p-6 rounded-lg shadow-lg w-2/3 max-w-md h-96 overflow-y-auto">
           <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center">Announcements</h2>
           <ul className="text-gray-800 space-y-4">
-            {Notifications.map((notification, index) => (
-              <li key={index} className="pb-2 border-b border-gray-500">
-                {notification}
+            {announcements.map((announcement) => (
+              <li key={announcement.id} className="pb-2 border-b border-gray-500">
+                <span>{announcement.message}</span>
+                <span className="text-gray-500 text-sm"> - {new Date(announcement.date).toLocaleString()}</span>
               </li>
             ))}
           </ul>

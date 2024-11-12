@@ -8,18 +8,29 @@ import Profile from './components/Profile/Profile';
 import ForgotPassword from './components/Login/ForgotPassword';
 import AuthProvider from './components/PrivateRoutes/AuthProvider';
 import PrivateRoutes from './components/PrivateRoutes/PrivateRoutes';
+import Admin from './components/Admin/Admin';
+import ViewBookings from './components/Admin/Confirm';
+import AddDriverForm from './components/Driver/Driver';
+import VehicleList from './components/Driver/VehicleList';
+import DriverList from './components/Driver/DriverList';
+import BookingList from './components/Admin/Booking_list';
+
 function App() {
   return (
     <AuthProvider>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/Confirm" element={<BookingList />} />
+          <Route path="/Driver" element={<DriverList/>} />
+          <Route path="/Vehicle" element={< VehicleList/>} />
           <Route path="/signup" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/Admin" element={<Admin/>} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/bookings" element={<PrivateRoutes><Bookings /></PrivateRoutes>} />
           <Route path="/profile" element={<PrivateRoutes><Profile /></PrivateRoutes>} />
-          <Route path="/rent" element={<PrivateRoutes><Rent /></PrivateRoutes>} />
+          <Route path="/rent" element={<Rent />} />
         </Routes>
       </Router>
     </AuthProvider>
