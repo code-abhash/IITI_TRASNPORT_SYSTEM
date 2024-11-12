@@ -11,6 +11,7 @@ urlpatterns = [
     path('signup/', UserListCreateView.as_view(), name='user-list-create'),
     path('users/<str:username>/', GetUserList.as_view(), name='user-detail'),  # Specific username filter
     path('userslist/', GetUserList.as_view(), name='user-list'),
+    path('userdetails/', get_user_details, name='user-details'),
     path('students/', StudentListCreateView.as_view(), name='student-list-create'),
     path('departments/', DepartmentListCreateView.as_view(), name='department-list-create'),
     path('faculties/', FacultyListCreateView.as_view(), name='faculty-list-create'),

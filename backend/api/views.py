@@ -8,6 +8,7 @@ from api.serializers import *
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.db import transaction
+from django.contrib.auth import get_user_model
 import sys
 
 class CustomTokenObtainPairView(TokenObtainPairView):
@@ -289,3 +290,28 @@ def update_vehicle(request, vehicle_id):
         serializer.save()
         return Response({'detail': 'Vehicle updated successfully'}, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+User = get_user_model()
+
+@api_view(['GET'])
+def get_user_details(request):
+    user = request.user
+
+    user_serializer = UserSerializer(user)
+    user_data = user_serializer.data
+    print(user_data)
+    # Add additional fields based on user_type
+    user_details=[]
+    name=user_data['username']
+    user_details.append(name)
+    print(name)
+    email=user_data['email_id']
+    user_details.append(email)
+    type=user_data['user_type']
+    user_details.append(type)
+    print(user_details)
+
+
+
+    # Return combined user data with role-specific information
+    return Response(user_details, status=status.HTTP_200_OK)

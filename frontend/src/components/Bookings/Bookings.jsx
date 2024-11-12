@@ -11,6 +11,10 @@ function BookingForm() {
   // Define states for each form section
   const navigate=useNavigate();
   const token = localStorage.getItem('token');
+  const [notification, setNotification] = useState({
+    message: '',
+    type: '' // 'success' or 'error'
+  });
   const [personalDetails, setPersonalDetails] = useState({
     name_user: '',
     type_of_booking: '',
@@ -34,6 +38,15 @@ function BookingForm() {
     drop_off_location: '',
     type_of_vehicle: ''
   });
+  const validateDetails = (details) => {
+    return (
+      details.date &&
+      details.time &&
+      details.pickup_location &&
+      details.drop_off_location &&
+      details.type_of_vehicle
+    );
+  };
 
   const handlePersonalDetailsChange = (e) => {
     const { name, value } = e.target;
@@ -57,6 +70,16 @@ function BookingForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Build the form data for sending file
+    if (
+      !validateDetails(arrivalDetails) &&
+      !validateDetails(departureDetails)
+    ) {
+      setNotification({
+        message: 'Please fill all the fields for Arrival or Departure details.',
+        type: 'error',
+      });
+    return;
+  }
     const bookingData = {
       booking: personalDetails,
       arrival_details: arrivalDetails,
@@ -76,7 +99,7 @@ function BookingForm() {
         },
       });
       console.log('Booking created:', response.data);
-      notyf.success('Booking COnfirmed')
+      notyf.success('Booking Confirmed')
       setTimeout(() => {
         navigate('/profile')
       }, 1000);
@@ -103,7 +126,16 @@ function BookingForm() {
 
         <div className="relative z-10 flex flex-col items-center pt-24 pb-10 px-6">
           <h1 className="text-4xl font-bold text-white mb-10 mt-10">Book a Vehicle</h1>
-          
+          {/* Notification */}
+          {notification.message && (
+            <div
+              className={`w-full p-4 text-center mb-4 rounded-md ${
+                notification.type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+              }`}
+            >
+              {notification.message}
+            </div>
+            )}
           <div className="flex flex-col md:flex-row justify-center gap-6 mb-6">
             {/* Personal Details Card */}
             <div className="bg-white bg-opacity-90 border-[3px] border-gray-500 p-6 rounded-lg shadow-lg w-full max-w-md">
