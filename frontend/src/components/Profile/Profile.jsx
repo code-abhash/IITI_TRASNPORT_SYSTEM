@@ -22,8 +22,8 @@ const Profile = () => {
             'Content-Type': 'application/json'
           },
         });
-        setUserDetails(response.data); 
-        console.log('user_details_fteched',response.data)// Assuming the response contains user data with name and email
+        setUserDetails(response.data);
+        console.log('user_details_fteched', response.data)// Assuming the response contains user data with name and email
       } catch (error) {
         console.error('Error fetching user details:', error);
       }
@@ -106,70 +106,85 @@ const Profile = () => {
                       <div className="text-gray-700 mt-2">
                         <p><strong>Status:</strong> {booking.status} </p>
                         <p><strong>Type of Booking:</strong> {booking.type_of_booking}</p>
-                        
-                        {/* Arrival Details */}
-                        <p><strong>Arrival:</strong></p>
-                        {booking.arrival_details && booking.arrival_details.length > 0 ? (
-                        <ul>
-                          <li>Date: {booking.arrival_details[0].date}</li>
-                          <li>Time: {booking.arrival_details[0].time}</li>
-                          <li>Pick-up Location: {booking.arrival_details[0].pickup_location}</li>
-                          <li>Drop-off Location: {booking.arrival_details[0].drop_off_location}</li>
-                          <li>Vehicle Type: {booking.arrival_details[0].type_of_vehicle}</li>
-                        </ul>
-                        ) : (
-                          <p>No arrival details available.</p>
-                        )}
-                        <button
-                          onClick={() => fetchDriverDetailsArrival(booking.arrival_details[0].arrival_id)}
-                          className="mt-2 bg-green-600 text-white font-bold py-1 px-4 rounded hover:bg-green-700"
-                        >
-                          Get Arrival Driver Details
-                        </button>
-                        {showArrivalDetails && driverDetailsArrival && (
-                          <div>
-                            <p><strong>Driver Name:</strong> {driverDetailsArrival[0]}</p>
-                            <p><strong>Driver Contact:</strong> {driverDetailsArrival[1]}</p>
-                            <button
-                              onClick={() => setShowArrivalDetails(false)}
-                              className="mt-2 bg-red-600 text-white font-bold py-1 px-4 rounded hover:bg-red-700"
-                            >
-                              Hide Arrival Driver Details
-                            </button>
-                          </div>
-                        )}
 
-                        {/* Departure Details */}
-                        <p><strong>Departure:</strong></p>
-                        {booking.departure_details && booking.departure_details.length > 0 ? (
-                          <ul>
-                            <li>Date: {booking.departure_details[0].date}</li>
-                            <li>Time: {booking.departure_details[0].time}</li>
-                            <li>Pick-up Location: {booking.departure_details[0].pickup_location}</li>
-                            <li>Drop-off Location: {booking.departure_details[0].drop_off_location}</li>
-                            <li>Vehicle Type: {booking.departure_details[0].type_of_vehicle}</li>
-                          </ul>
-                        ) : (
-                          <p>No departure details available.</p>
-                        )}
-                        <button
-                          onClick={() => fetchDriverDetailsDeparture(booking.departure_details[0].departure_id)}
-                          className="mt-2 bg-green-600 text-white font-bold py-1 px-4 rounded hover:bg-green-700"
-                        >
-                          Get Departure Driver Details
-                        </button>
-                        {showDepartureDetails && driverDetailsDeparture && (
-                          <div>
-                            <p><strong>Driver Name:</strong> {driverDetailsDeparture[0]}</p>
-                            <p><strong>Driver Contact:</strong> {driverDetailsDeparture[1]}</p>
-                            <button
-                              onClick={() => setShowDepartureDetails(false)}
-                              className="mt-2 bg-red-600 text-white font-bold py-1 px-4 rounded hover:bg-red-700"
-                            >
-                              Hide Departure Driver Details
-                            </button>
+                        {/* Arrival and Departure Details (Aligned horizontally) */}
+                        <div className="flex justify-between gap-4">
+                          {/* Arrival Details */}
+                          <div className="flex-1">
+                            <p><strong>Arrival:</strong></p>
+                            {booking.arrival_details && booking.arrival_details.length > 0 ? (
+                              <ul>
+                                <li>Date: {booking.arrival_details[0].date}</li>
+                                <li>Time: {booking.arrival_details[0].time}</li>
+                                <li>Pick-up Location: {booking.arrival_details[0].pickup_location}</li>
+                                <li>Drop-off Location: {booking.arrival_details[0].drop_off_location}</li>
+                                <li>Vehicle Type: {booking.arrival_details[0].type_of_vehicle}</li>
+                              </ul>
+                            ) : (
+                              <p>No arrival details available.</p>
+                            )}
+
+                            {/* Only show the button if arrival details are available */}
+                            {booking.arrival_details && booking.arrival_details.length > 0 && (
+                              <button
+                                onClick={() => fetchDriverDetailsArrival(booking.arrival_details[0].arrival_id)}
+                                className="mt-2 bg-green-600 text-white font-bold py-1 px-4 rounded hover:bg-green-700"
+                              >
+                                Get Arrival Driver Details
+                              </button>
+                            )}
+                            {showArrivalDetails && driverDetailsArrival && (
+                              <div>
+                                <p><strong>Driver Name:</strong> {driverDetailsArrival[0]}</p>
+                                <p><strong>Driver Contact:</strong> {driverDetailsArrival[1]}</p>
+                                <button
+                                  onClick={() => setShowArrivalDetails(false)}
+                                  className="mt-2 bg-red-600 text-white font-bold py-1 px-4 rounded hover:bg-red-700"
+                                >
+                                  Hide Arrival Driver Details
+                                </button>
+                              </div>
+                            )}
                           </div>
-                        )}
+
+                          {/* Departure Details */}
+                          <div className="flex-1">
+                            <p><strong>Departure:</strong></p>
+                            {booking.departure_details && booking.departure_details.length > 0 ? (
+                              <ul>
+                                <li>Date: {booking.departure_details[0].date}</li>
+                                <li>Time: {booking.departure_details[0].time}</li>
+                                <li>Pick-up Location: {booking.departure_details[0].pickup_location}</li>
+                                <li>Drop-off Location: {booking.departure_details[0].drop_off_location}</li>
+                                <li>Vehicle Type: {booking.departure_details[0].type_of_vehicle}</li>
+                              </ul>
+                            ) : (
+                              <p>No departure details available.</p>
+                            )}
+
+                            {/* Only show the button if departure details are available */}
+                            {booking.departure_details && booking.departure_details.length > 0 && (
+                              <button
+                                onClick={() => fetchDriverDetailsDeparture(booking.departure_details[0].departure_id)}
+                                className="mt-2 bg-green-600 text-white font-bold py-1 px-4 rounded hover:bg-green-700"
+                              >
+                                Get Departure Driver Details
+                              </button>
+                            )}
+                            {showDepartureDetails && driverDetailsDeparture && (
+                              <div>
+                                <p><strong>Driver Name:</strong> {driverDetailsDeparture[0]}</p>
+                                <p><strong>Driver Contact:</strong> {driverDetailsDeparture[1]}</p>
+                                <button
+                                  onClick={() => setShowDepartureDetails(false)}
+                                  className="mt-2 bg-red-600 text-white font-bold py-1 px-4 rounded hover:bg-red-700"
+                                >
+                                  Hide Departure Driver Details
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        </div>
 
                         <button
                           className="mt-2 bg-red-600 text-white font-bold py-1 px-4 rounded hover:bg-red-700"
