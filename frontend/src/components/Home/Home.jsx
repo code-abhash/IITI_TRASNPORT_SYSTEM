@@ -4,19 +4,19 @@ import img1 from '../../assets/slide_pic_1.png';
 import img2 from '../../assets/slide_pic_2.jpg';
 import img3 from '../../assets/slide_pic_3.png';
 import Footer from '../Footer/Footer';
-import api from '../../api'; // Import the api instance
+import api from '../../api';
 
 function Home() {
   const images = [img1, img2, img3];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [announcements, setAnnouncements] = useState([]);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    // Fetch announcements on component mount
     const fetchAnnouncements = async () => {
       try {
         const response = await api.get('/notifications/');
-        setAnnouncements(response.data); // Set the fetched announcements to state
+        setAnnouncements(response.data);
       } catch (error) {
         console.error('Error fetching announcements:', error);
       }
@@ -56,16 +56,30 @@ function Home() {
         </div>
 
         {/* Notifications Card */}
-        <div className="bg-white bg-opacity-90 border-[3px] border-gray-500 p-4 md:p-6 rounded-lg shadow-lg w-2/3 max-w-md h-96 overflow-y-auto">
+        <div
+          className="bg-white bg-opacity-90 border-[3px] border-gray-500 p-4 md:p-6 rounded-lg shadow-lg w-2/3 max-w-md h-96 overflow-hidden"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center">Announcements</h2>
-          <ul className="text-gray-800 space-y-4">
-            {announcements.map((announcement) => (
-              <li key={announcement.id} className="pb-2 border-b border-gray-500">
-                <span>{announcement.message}</span>
-                <span className="text-gray-500 text-sm"> - {new Date(announcement.date).toLocaleString()}</span>
-              </li>
-            ))}
-          </ul>
+          <div
+            className={`h-80 pb-6 ${
+              isHovered ? 'overflow-y-auto' : 'overflow-y-clip scroll-auto'
+            }`}
+          >
+            <ul
+              className={`text-gray-800 space-y-4 ${
+                isHovered ? '' : 'animate-scroll'
+              }`}
+            >
+              {announcements.map((announcement) => (
+                <li key={announcement.id} className="pb-2 border-b border-gray-500">
+                  <span>{announcement.message}</span>
+                  <span className="text-gray-500 text-sm"> - {new Date(announcement.date).toLocaleString()}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../api';
 
 function BookingDetail({ booking, onClose }) {
   const [vehicles, setVehicles] = useState([]);
@@ -13,7 +13,7 @@ function BookingDetail({ booking, onClose }) {
 
     const fetchVehicles = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/vehicles/');
+        const response = await api.get('/vehicles/');
         setVehicles(response.data);
       } catch (error) {
         console.error('Error fetching vehicles:', error);
@@ -24,7 +24,7 @@ function BookingDetail({ booking, onClose }) {
 
   const handleConfirmBooking = async () => {
     try {
-      await axios.post('http://127.0.0.1:8000/api/update_booking/', {
+      await api.post('/update_booking/', {
         booking_id: booking.booking_id,
         status: 'confirmed',
         arrival_vehicle_id: arrivalVehicleId,
@@ -39,7 +39,7 @@ function BookingDetail({ booking, onClose }) {
   };
   const handleRejectBooking = async () => {
     try {
-      await axios.post('http://127.0.0.1:8000/api/update_booking/', {
+      await api.post('/update_booking/', {
         booking_id: booking.booking_id,
         status: 'rejected',
       });

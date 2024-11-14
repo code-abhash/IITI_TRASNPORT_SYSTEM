@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../../api';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import BookingDetail from './Confirm';
@@ -13,7 +13,7 @@ function BookingList() {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/bookings/');
+        const response = await api.get('/bookings/');
         setBookings(response.data);
       } catch (error) {
         console.error('Error fetching bookings:', error);

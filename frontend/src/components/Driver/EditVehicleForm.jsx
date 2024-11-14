@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import api from '../../api'; // Import your api instance
 
 const EditVehicleForm = ({ vehicle, onClose, onUpdate }) => {
   const [formData, setFormData] = useState({
@@ -28,9 +29,8 @@ const EditVehicleForm = ({ vehicle, onClose, onUpdate }) => {
   useEffect(() => {
     const fetchDrivers = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/drivers/');
-        const data = await response.json();
-        setDrivers(data);
+        const response = await api.get('/drivers/'); // Use api.get instead of fetch
+        setDrivers(response.data); // Assuming the data is in the response.data
       } catch (error) {
         console.error("Error fetching drivers:", error);
       }
@@ -48,15 +48,9 @@ const EditVehicleForm = ({ vehicle, onClose, onUpdate }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/update_vehicle/${vehicle.vehicle_id}/`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await api.put(`/update_vehicle/${vehicle.vehicle_id}/`, formData); // Use api.put instead of fetch
 
-      if (response.ok) {
+      if (response.status === 200) { // 200 for successful PUT requests
         alert('Vehicle updated successfully');
         onUpdate(formData);
         onClose();

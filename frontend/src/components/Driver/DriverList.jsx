@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import api from '../../api';
 import AddDriverForm from './Driver';
 import EditDriverForm from './EditDriver';
 
@@ -13,15 +14,10 @@ const DriverList = () => {
     useEffect(() => {
         const fetchDrivers = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/get_drivers/');
-                if (response.ok) {
-                    const data = await response.json();
-                    setDrivers(data);
-                } else {
-                    console.error('Failed to fetch driver details');
-                }
+                const response = await api.get('/get_drivers/'); // Use the API instance
+                setDrivers(response.data); // Assuming response.data is the list of drivers
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Failed to fetch driver details:', error);
             } finally {
                 setLoading(false);
             }

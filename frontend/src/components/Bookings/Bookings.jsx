@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
-import axios from 'axios';
+import api from '../../api';
 import img2 from '../../assets/slide_pic_2.jpg';
 import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css'; 
@@ -92,9 +92,8 @@ function BookingForm() {
     // }
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/bookings/', bookingData, {
+      const response = await api.post('/bookings/', bookingData, {
         headers: {
-          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
       });

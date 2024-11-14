@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import api from '../../api'; // Import your api instance
 
 const EditDriverForm = ({ driver, onClose }) => {
   const [formData, setFormData] = useState({
@@ -23,22 +24,16 @@ const EditDriverForm = ({ driver, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/drivers/update/${driver.driver_id}/`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await api.put(`/drivers/update/${driver.driver_id}/`, formData); // Use api.put instead of fetch
 
-      if (response.ok) {
+      if (response.status === 200) { // 200 for successful PUT requests
         alert('Driver updated successfully');
         onClose();
       } else {
         alert('Failed to update driver');
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error updating driver:", error);
       alert('Error while updating driver');
     }
   };
