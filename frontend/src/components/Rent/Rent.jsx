@@ -6,11 +6,14 @@ import electricIcon from '../../assets/electric_icon.png';
 import img1 from '../../assets/slide_pic_1.png'
 import img2 from '../../assets/slide_pic_2.jpg'
 import img3 from '../../assets/slide_pic_3.png'
-import electric_schedule from '../../assets/electric_color.png'
-import Buses_Schedule from '../../assets/bus.png'
+import electric_schedule from '../../assets/charging.png'
+import Buses_Schedule from '../../assets/bus_new.png'
+
 
 
 function Rent() {
+  const isSuperuser = localStorage.getItem('is_superuser')
+  console.log(isSuperuser);
   return (
     <>
       {/* Main background container */}
@@ -22,12 +25,10 @@ function Rent() {
           backgroundPosition: 'center',
         }}
       >
-        {/* Dark overlay */}
         <div className="absolute inset-0 bg-black opacity-80"></div>
 
-        {/* Page content - wrapped in a relative div to layer above the overlay */}
         <div className="relative z-10 flex-1 mt-24 p-6 md:p-12 space-y-12 text-white">
-          {/* Navbar */}
+
           <div className="fixed top-0 left-0 w-full z-20">
             <Navbar />
           </div>
@@ -90,38 +91,81 @@ function Rent() {
 <section>
   <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-x-4 sm:space-y-0">
     {/* Vehicle Box 1 */}
-    <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg w-full sm:w-1/3 h-60">
+    <div className="bg-gray-600 text-white p-6 rounded-lg shadow-lg w-full sm:w-1/3 h-80">
       {/* Insert Image */}
-      <img
-        src={electric_schedule}
-        alt="Electric_vehicle_Schedule"
-        className="w-full h-full object-contain rounded-md"
-      />
+      <a href="/Public/scheduleEV.pdf">
+      <div
+  style={{
+    display:"flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%", // Full viewport height
+     // Optional background color for contrast
+  }}
+>
+<img
+  src={electric_schedule}
+  alt="Electric Vehicle Schedule"
+  style={{
+    width: "80%",
+    height: "80%",
+    backgroundColor: "rgb(245, 288, 255)",
+    objectFit: "scale-down",
+    borderRadius: "70%",
+    transition: "transform 0.3s ease, box-shadow 0.3s ease", // Smooth transition
+  }}
+  className="hover:scale-105 hover:shadow-lg"
+/>
+</div>
+</a>
+
       <div className=" text-center">
         {/* PDF Link */}
         <a
         href="/Public/scheduleEV.pdf"  // Correct path to the file in the public folder
-        className="text-blue-400 hover:text-blue-600"
+        className="text-gray hover:text-blue-600"
         >
         View Schedule PDF
         </a>
       </div>
     </div>
 
+
+
     {/* Vehicle Box 2 */}
-    <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg w-full sm:w-1/3 h-60">
+    <div className="bg-gray-600 text-white p-6 rounded-lg shadow-lg w-full sm:w-1/3 h-80">
       {/* Insert Image */}
-      <img
-        src={Buses_Schedule}
-        alt="Buses_Schedule"
-        className="w-full h-full object-contain rounded-md"
-      />
+      <a href="/Public/Bus_schedule.pdf">
+      <div
+  style={{
+    display:"flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%", // Full viewport height
+     // Optional background color for contrast
+  }}
+>
+  
+  <img
+    src={Buses_Schedule}
+    alt="Bus  Vehicle Schedule"
+    style={{
+      width: "80%",
+      height: "80%",
+      backgroundColor: "rgb(245, 288, 255)",
+      objectFit: "scale-down",
+      borderRadius: "70%", // Circular shapetransition: "transform 0.3s ease, box-shadow 0.3s ease", // Smooth transition
+    }}
+    className="hover:scale-105 hover:shadow-lg"
+  />  
+</div>
+</a>
       <div className="text-center">
         {/* PDF Link */}
         <a
           href="/Public/Bus_schedule.pdf" // Replace with the actual PDF path
           target="_blank"
-          className="text-blue-400 hover:text-blue-600"
+          className="text-gray  hover:text-blue-600"
         >
           View Schedule PDF
         </a>
@@ -129,6 +173,12 @@ function Rent() {
     </div>
   </div>
 </section>
+
+
+
+
+
+
 
 
 

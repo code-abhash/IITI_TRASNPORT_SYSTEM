@@ -41,7 +41,10 @@ function Login() {
         username: formData.username,
         password: formData.password
       });
-      localStorage.setItem('token', response.data.access);  
+      
+      const { access, refresh } = response.data;  // Assuming this is the correct response structure
+      localStorage.setItem('token', access);      // Save access token
+      localStorage.setItem('refresh_token', refresh);  // Save refresh token
       setIsAuthenticated(true); 
       notyf.success('Login Successful')
       navigate('/');
@@ -110,7 +113,7 @@ function Login() {
             </a>
           </p>
           <p className="text-center mt-2 text-gray-600">
-            <a href="/forgot-password" className="text-blue-500">
+            <a href="/password_reset" className="text-blue-500">
               Forgot Password?
             </a>
           </p>

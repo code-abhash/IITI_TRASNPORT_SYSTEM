@@ -11,18 +11,27 @@ import PrivateRoutes from './components/PrivateRoutes/PrivateRoutes';
 import Admin from './components/Admin/Admin';
 import ViewBookings from './components/Admin/Confirm';
 import AddDriverForm from './components/Driver/Driver';
-import AddVehicleForm from './components/Driver/Vehicle';
-
+import VehicleList from './components/Driver/VehicleList';
+import DriverList from './components/Driver/DriverList';
+import BookingList from './components/Admin/Booking_list';
+import PasswordResetRequest from './components/Login/ForgotPassword';
+import PasswordResetConfirm from './components/Login/PasswordConfirm';
 function App() {
   return (
     <AuthProvider>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/Confirm" element={<ViewBookings />} />
-          <Route path="/Driver" element={<AddDriverForm/>} />
-          <Route path="/Vehicle" element={< AddVehicleForm/>} />
-
+          <Route
+            path="/password_reset"
+            element={<PasswordResetRequest />}
+          />
+          <Route
+            path="/reset/:username/:token"
+            element={<PasswordResetConfirm />}/>
+          <Route path="/Confirm" element={<BookingList />} />
+          <Route path="/Driver" element={<DriverList/>} />
+          <Route path="/Vehicle" element={< VehicleList/>} />
           <Route path="/signup" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/Admin" element={<Admin/>} />

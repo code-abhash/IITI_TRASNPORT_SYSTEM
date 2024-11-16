@@ -62,10 +62,11 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
+    'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
+    ],
 }
+
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -135,7 +136,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
@@ -144,9 +144,27 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
+# Email backend settings for sending emails using SMTP.
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Specifies the backend to use for sending emails.
+EMAIL_HOST = 'smtp.gmail.com'  # The SMTP server to use for sending emails.
+EMAIL_USE_TLS = True  # Use TLS (Transport Layer Security) for secure email transmission.
+EMAIL_PORT = 587  # The port to use for the SMTP server.
+EMAIL_HOST_USER = 'abhashraj751@gmail.com'  # The email address to use for sending emails.
+EMAIL_HOST_PASSWORD = 'ogjk pshj kkad wjzk'  # The password for the email address.
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AUTH_USER_MODEL='api.User'
+
+# settings.py
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),  # Adjust as needed
+    'ROTATE_REFRESH_TOKENS': True,  # Issues new refresh tokens when used
+    'BLACKLIST_AFTER_ROTATION': True,
+}

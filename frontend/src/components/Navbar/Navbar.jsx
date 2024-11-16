@@ -5,6 +5,7 @@ import { AuthContext } from '../PrivateRoutes/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
+  const isSuperuser = localStorage.getItem('is_superuser') === 'true'; // Check if superuser is true
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext); 
   const navigate = useNavigate();
@@ -22,7 +23,9 @@ function Navbar() {
   return (
     <div className="h-24 w-full bg-gray-900 flex items-center justify-between px-8">
       <div className="flex items-center">
-        <img src={logo} className="h-16 w-4/5 md:w-full" alt="IITI Logo" />
+        <NavLink to="/">
+          <img src={logo} className="h-16 w-4/5 md:w-full" alt="IITI Logo" />
+        </NavLink>
       </div>
       <div className="lg:hidden flex items-center">
         <button onClick={toggleMenu} className="text-white focus:outline-none">
@@ -34,43 +37,48 @@ function Navbar() {
       <div className="hidden lg:flex space-x-8 mr-12 text-lg font-semibold">
         <NavLink
           to="/"
-          className={({ isActive }) => isActive ? 'text-gray-400 font-bold' : 'bg-gray-900 text-white hover:underline'}
+          className={({ isActive }) => (isActive ? 'text-gray-400 font-bold' : 'bg-gray-900 text-white hover:underline')}
         >
           Home
         </NavLink>
         {isAuthenticated ? (
           <>
-            <NavLink
-              to="/bookings"
-              className={({ isActive }) => isActive ? 'text-gray-400 font-bold' : 'bg-gray-900 text-white hover:underline'}
-            >
-              Bookings
-            </NavLink>
+            {/* Only show Bookings if not a superuser */}
+            {!isSuperuser && (
+              <NavLink
+                to="/bookings"
+                className={({ isActive }) => (isActive ? 'text-gray-400 font-bold' : 'bg-gray-900 text-white hover:underline')}
+              >
+                Bookings
+              </NavLink>
+            )}
+            {/* Show Admin instead of My Profile if the user is a superuser */}
+            
             <NavLink
               to="/rent"
-              className={({ isActive }) => isActive ? 'text-gray-400 font-bold' : 'bg-gray-900 text-white hover:underline'}
+              className={({ isActive }) => (isActive ? 'text-gray-400 font-bold' : 'bg-gray-900 text-white hover:underline')}
             >
               Rates
             </NavLink>
             <NavLink
-              to="/profile"
-              className={({ isActive }) => isActive ? 'text-gray-400 font-bold' : 'bg-gray-900 text-white hover:underline'}
+              to={isSuperuser ? '/admin' : '/profile'}
+              className={({ isActive }) => (isActive ? 'text-gray-400 font-bold' : 'bg-gray-900 text-white hover:underline')}
             >
-              My profile
+              {isSuperuser ? 'Admin' : 'My Profile'}
             </NavLink>
             <button className="bg-red-700 text-white text-md hover:bg-red-800 p-1 rounded-md" onClick={handleLogout}>
               Log out
             </button>
           </>
         ) : (
-          <>
-            <NavLink
-              to="/login"
-              className={({ isActive }) => isActive ? 'text-gray-400 font-bold' : 'bg-gray-900 text-white hover:underline'}
-            ><button className="bg-red-700 text-white text-md hover:bg-red-800 p-1 rounded-md">
-              Login</button>
-            </NavLink>
-          </>
+          <NavLink
+            to="/login"
+            className={({ isActive }) => (isActive ? 'text-gray-400 font-bold' : 'bg-gray-900 text-white hover:underline')}
+          >
+            <button className="bg-red-700 text-white text-md hover:bg-red-800 p-1 rounded-md">
+              Login
+            </button>
+          </NavLink>
         )}
       </div>
 
@@ -80,19 +88,20 @@ function Navbar() {
             <NavLink to="/" className="hover:underline text-left">Home</NavLink>
             {isAuthenticated ? (
               <>
-                <NavLink to="/bookings" className="hover:underline text-left">Bookings</NavLink>
+                {!isSuperuser && (
+                  <NavLink to="/bookings" className="hover:underline text-left">Bookings</NavLink>
+                )}
+                
                 <NavLink to="/rent" className="hover:underline text-left">Rates</NavLink>
-                <NavLink to="/profile" className="hover:underline text-left">My profile</NavLink>
+                <NavLink to={isSuperuser ? '/admin' : '/profile'} className="hover:underline text-left">
+                  {isSuperuser ? 'Admin' : 'My Profile'}
+                </NavLink>
                 <button className="bg-red-700 hover:bg-red-800 p-1 rounded-md text-left" onClick={handleLogout}>
                   Log out
                 </button>
               </>
             ) : (
-              <>
-                <NavLink to="/login" className="hover:underline text-left">
-                  Log In
-                </NavLink>
-              </>
+              <NavLink to="/login" className="hover:underline text-left">Log In</NavLink>
             )}
           </div>
         </div>
