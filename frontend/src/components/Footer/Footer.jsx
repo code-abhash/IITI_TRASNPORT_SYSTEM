@@ -20,17 +20,27 @@ function Footer() {
             <p>IIT Indore,</p>
             <p>Khandwa Road, Simrol, </p>
             <p>Indore, Madhya Pradesh 453552</p>
-            <p className="mt-2">📞 +91-731-660 Ext-3557</p>
-            <p  className="mt-2">✉️ iititransport@iiti.ac.in</p>
+            <a href="tel:+91731660Ext3557">
+    📞 +91-731-660 Ext-3557
+</a>
+<p className="mt-2">
+    <a href="mailto:iititransport@iiti.ac.in" >
+        ✉️ iititransport@iiti.ac.in
+    </a>
+</p>
           </div>
           <div>
             <p className="font-semibold">Staff</p>
             <p>IIT Indore,</p>
             <p>Khandwa Road, Simrol, </p>
             <p>Indore, Madhya Pradesh 453552</p>
-            <p className="mt-2">📞 +91-7509062831,
-            +91-7509062834</p>
+            <a href="tel:+91-7509062831">
+            📞 +91-7509062831,
+            </a>
+            <a href="tel:+91-7509062834">+91-7509062834</a>  
+            <a href="mailto:cse230001069@iiti.ac.in">
             <p>transport@iiti.ac.in</p>
+            </a>   
           </div>
         </div>
 
@@ -50,7 +60,7 @@ function Footer() {
 
       {/* Footer Bottom Section */}
       <div className="text-center text-sm mt-6 border-t border-gray-700 pt-4">
-        <p>© 2024 | All rights reserved </p>
+        <p>© 2024 IIT Indore| All rights reserved </p>
       </div>
     </footer>
   );

@@ -38,6 +38,7 @@ function BookingDetail({ booking, onClose }) {
       setStatus('confirmed'); // Update local status
       alert('Booking confirmed!');
       onClose();
+      window.location.reload();
     } catch (error) {
       console.error('Error confirming booking:', error);
     }

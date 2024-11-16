@@ -25,6 +25,7 @@ const AddDriverForm = () => {
           name: '',
           phone_no: ''
         });
+        window.location.reload();
       } else {
         alert('Failed to add driver');
       }

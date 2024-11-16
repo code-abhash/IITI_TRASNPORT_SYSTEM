@@ -15,7 +15,8 @@ function Register() {
     email_id: '',
     password: '',
     cnf_password: '',
-    user_type: 'user'
+    user_type: 'user',
+    // is_superuser: '0',
   });
 
   const [error, setError] = useState('');

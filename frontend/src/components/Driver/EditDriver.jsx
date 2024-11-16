@@ -29,7 +29,9 @@ const EditDriverForm = ({ driver, onClose }) => {
       if (response.status === 200) { // 200 for successful PUT requests
         alert('Driver updated successfully');
         onClose();
-      } else {
+        window.location.reload();
+      } 
+      else {
         alert('Failed to update driver');
       }
     } catch (error) {

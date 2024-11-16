@@ -45,6 +45,7 @@ const AddVehicleForm = () => {
           vehicle_status: '',
           vehicle_number: ''
         });
+        window.location.reload();
       } else {
         alert('Failed to add vehicle');
       }

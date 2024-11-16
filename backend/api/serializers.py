@@ -25,7 +25,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     cnf_password = serializers.CharField(write_only=True)
-    is_superuser = serializers.BooleanField()
+    is_superuser = serializers.BooleanField(default=False)
     class Meta:
         model = User
         fields = ['id', 'username', 'email_id', 'password', 'cnf_password','first_name', 'last_name', 'user_type','is_superuser']
@@ -39,6 +39,7 @@ class UserSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({"password:password did not match"})
         user = User(**validated_data)
         user.set_password(validated_data['password'])
+        
         user.save()
         send_mail(
             'Welcome to Our Platform!',

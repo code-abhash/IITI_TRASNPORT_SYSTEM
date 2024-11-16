@@ -54,6 +54,7 @@ const EditVehicleForm = ({ vehicle, onClose, onUpdate }) => {
         alert('Vehicle updated successfully');
         onUpdate(formData);
         onClose();
+        window.location.reload();
       } else {
         alert('Failed to update vehicle');
       }
