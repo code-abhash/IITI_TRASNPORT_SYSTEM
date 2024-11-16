@@ -9,6 +9,7 @@ from api.serializers import *
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.db import transaction
+from rest_framework.permissions import AllowAny
 import sys
 from django.core.mail import send_mail
 from django.conf import settings
@@ -18,6 +19,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
 
 class UserListCreateView(generics.ListCreateAPIView):
+    permission_classes = [AllowAny]
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
