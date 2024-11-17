@@ -30,7 +30,8 @@ function BookingList() {
   // Filter bookings based on search query
   const filteredBookings = bookings.filter((booking) =>
     booking.name_user.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    booking.booking_id.toString().includes(searchQuery)
+    booking.booking_id.toString().includes(searchQuery) ||
+    booking.status.toString().includes(searchQuery)
   );
 
   return (

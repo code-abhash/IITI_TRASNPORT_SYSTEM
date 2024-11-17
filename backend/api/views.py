@@ -194,62 +194,63 @@ def get_drivers(request):
     serializer = DriverSerializer(drivers, many=True)
     return Response(serializer.data)
 
-@api_view(['POST'])
-def confirm_booking(request):
-    try:
-        booking_id = request.data.get('booking_id')
-        status_update = request.data.get('status', 'confirmed')
-        arrival_vehicle_id = request.data.get('arrival_vehicle_id')
-        departure_vehicle_id = request.data.get('departure_vehicle_id')
+# @api_view(['POST'])
+# def confirm_booking(request):
+#     try:
+#         booking_id = request.data.get('booking_id')
+#         status_update = request.data.get('status', 'confirmed')
+#         arrival_vehicle_id = request.data.get('arrival_vehicle_id')
+#         departure_vehicle_id = request.data.get('departure_vehicle_id')
+#         print("current:")
+#         # Fetch the booking object
+#         booking = Bookings.objects.get(booking_id=booking_id)
+#         print("confirm",booking)
+#         # Update booking status
+#         booking.status = status_update
+#         booking.save()
+        
+#         if booking.user_id.email_id:  # Assuming user_id is a foreign key to the user model
+#             send_mail(
+#                 subject='Booking Confirmation',
+#                 message=f"Hello {booking.user_id.username},\n\nYour booking (ID: {booking_id}) has been successfully confirmed. You can check your arrival and departure details in your account.\n\nThank you for choosing our service!",
+#                 from_email=settings.EMAIL_HOST_USER,
+#                 recipient_list=[booking.user_id.email_id],
+#                 fail_silently=False,
+#             )
+        
+#         # Update arrival details, if they exist
+#         try:
+#             arrival_details = ArrivalDetails.objects.get(booking_id=booking_id)
+#             if arrival_vehicle_id:
+#                 arrival_vehicle = Vehicle.objects.get(vehicle_id=arrival_vehicle_id)
+#                 arrival_details.vehicle_id = arrival_vehicle
+#                 arrival_details.save()
+#         except ArrivalDetails.DoesNotExist:
+#             # Skip updating arrival details if they don't exist
+#             pass
+        
+#         # Update departure details, if they exist
+#         try:
+#             departure_details = DepartureDetails.objects.get(booking_id=booking_id)
+#             if departure_vehicle_id:
+#                 departure_vehicle = Vehicle.objects.get(vehicle_id=departure_vehicle_id)
+#                 departure_details.vehicle_id = departure_vehicle
+#                 departure_details.save()
+#         except DepartureDetails.DoesNotExist:
+#             # Skip updating departure details if they don't exist
+#             pass
 
-        # Fetch the booking object
-        booking = Bookings.objects.get(booking_id=booking_id)
-        
-        # Update booking status
-        booking.status = status_update
-        booking.save()
-        if booking.user_id.email_id:  # Assuming user_id is a foreign key to the user model
-            send_mail(
-                subject='Booking Confirmation',
-                message=f"Hello {booking.user_id.username},\n\nYour booking (ID: {booking_id}) has been successfully confirmed. You can check your arrival and departure details in your account.\n\nThank you for choosing our service!",
-                from_email=settings.EMAIL_HOST_USER,
-                recipient_list=[booking.user_id.email_id],
-                fail_silently=False,
-            )
-        
-        # Update arrival details, if they exist
-        try:
-            arrival_details = ArrivalDetails.objects.get(booking_id=booking_id)
-            if arrival_vehicle_id:
-                arrival_vehicle = Vehicle.objects.get(vehicle_id=arrival_vehicle_id)
-                arrival_details.vehicle_id = arrival_vehicle
-                arrival_details.save()
-        except ArrivalDetails.DoesNotExist:
-            # Skip updating arrival details if they don't exist
-            pass
-        
-        # Update departure details, if they exist
-        try:
-            departure_details = DepartureDetails.objects.get(booking_id=booking_id)
-            if departure_vehicle_id:
-                departure_vehicle = Vehicle.objects.get(vehicle_id=departure_vehicle_id)
-                departure_details.vehicle_id = departure_vehicle
-                departure_details.save()
-        except DepartureDetails.DoesNotExist:
-            # Skip updating departure details if they don't exist
-            pass
-
-        # Send confirmation email
+#         # Send confirmation email
         
 
-        return Response({"message": "Booking confirmed, vehicle IDs updated, and confirmation email sent."}, status=status.HTTP_200_OK)
+#         return Response({"message": "Booking confirmed, vehicle IDs updated, and confirmation email sent."}, status=status.HTTP_200_OK)
     
-    except Bookings.DoesNotExist:
-        return Response({"error": "Booking not found."}, status=status.HTTP_404_NOT_FOUND)
-    except Vehicle.DoesNotExist:
-        return Response({"error": "Vehicle not found."}, status=status.HTTP_404_NOT_FOUND)
-    except Exception as e:
-        return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+#     except Bookings.DoesNotExist:
+#         return Response({"error": "Booking not found."}, status=status.HTTP_404_NOT_FOUND)
+#     except Vehicle.DoesNotExist:
+#         return Response({"error": "Vehicle not found."}, status=status.HTTP_404_NOT_FOUND)
+#     except Exception as e:
+#         return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])
@@ -356,7 +357,7 @@ def confirm_booking(request):
         status_update = request.data.get('status', 'confirmed')
         arrival_vehicle_id = request.data.get('arrival_vehicle_id')
         departure_vehicle_id = request.data.get('departure_vehicle_id')
-
+        print("confirm:")
         if not booking_id:
             return Response({"error": "Booking ID is required."}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -364,10 +365,20 @@ def confirm_booking(request):
         booking = Bookings.objects.get(booking_id=booking_id)
         booking.status = status_update
         booking.save()
+        print("booking",booking)
 
         # Assign vehicles to arrival and departure details if they exist
         assign_vehicle_to_detail(ArrivalDetails, booking_id, arrival_vehicle_id)
         assign_vehicle_to_detail(DepartureDetails, booking_id, departure_vehicle_id)
+
+        if booking.user_id.email_id:  # Assuming user_id is a foreign key to the user model
+            send_mail(
+                subject = f'Booking {"Confirmation" if booking.status == "confirmed" else "Rejection"}',
+                message=f"Hello {booking.user_id.username},\n\nYour booking (ID: {booking_id}) has been  {booking.status}. You can check your arrival and departure details in your account.\n\nThank you for choosing our service!",
+                from_email=settings.EMAIL_HOST_USER,
+                recipient_list=[booking.user_id.email_id],
+                fail_silently=False,
+            )
 
         # Prepare success response with details
         return Response({

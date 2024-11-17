@@ -41,6 +41,12 @@ function Navbar() {
         >
           Home
         </NavLink>
+        <NavLink
+              to="/rent"
+              className={({ isActive }) => (isActive ? 'text-gray-400 font-bold' : 'bg-gray-900 text-white hover:underline')}
+            >
+              Rates
+            </NavLink>
         {isAuthenticated ? (
           <>
             {/* Only show Bookings if not a superuser */}
@@ -54,12 +60,12 @@ function Navbar() {
             )}
             {/* Show Admin instead of My Profile if the user is a superuser */}
             
-            <NavLink
+            {/* <NavLink
               to="/rent"
               className={({ isActive }) => (isActive ? 'text-gray-400 font-bold' : 'bg-gray-900 text-white hover:underline')}
             >
               Rates
-            </NavLink>
+            </NavLink> */}
             <NavLink
               to={isSuperuser ? '/admin' : '/profile'}
               className={({ isActive }) => (isActive ? 'text-gray-400 font-bold' : 'bg-gray-900 text-white hover:underline')}
@@ -86,13 +92,15 @@ function Navbar() {
         <div className="absolute top-24 right-8 w-48 bg-gray-900 text-white rounded-md shadow-lg md:hidden">
           <div className="flex flex-col space-y-2 p-4">
             <NavLink to="/" className="hover:underline text-left">Home</NavLink>
+            <NavLink to="/rent" className="hover:underline text-left">Rates</NavLink>
+            
             {isAuthenticated ? (
               <>
                 {!isSuperuser && (
                   <NavLink to="/bookings" className="hover:underline text-left">Bookings</NavLink>
                 )}
                 
-                <NavLink to="/rent" className="hover:underline text-left">Rates</NavLink>
+               
                 <NavLink to={isSuperuser ? '/admin' : '/profile'} className="hover:underline text-left">
                   {isSuperuser ? 'Admin' : 'My Profile'}
                 </NavLink>

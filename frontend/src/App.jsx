@@ -29,12 +29,12 @@ function App() {
           <Route
             path="/reset/:username/:token"
             element={<PasswordResetConfirm />}/>
-          <Route path="/Confirm" element={<BookingList />} />
-          <Route path="/Driver" element={<DriverList/>} />
-          <Route path="/Vehicle" element={< VehicleList/>} />
+          <Route path="/Confirm" element={<PrivateRoutes><BookingList /></PrivateRoutes>} />
+          <Route path="/Driver" element={<PrivateRoutes><DriverList/></PrivateRoutes>} />
+          <Route path="/Vehicle" element={<PrivateRoutes>< VehicleList/></PrivateRoutes>} />
           <Route path="/signup" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/Admin" element={<Admin/>} />
+          <Route path="/Admin" element={<PrivateRoutes><Admin/></PrivateRoutes>} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/bookings" element={<PrivateRoutes><Bookings /></PrivateRoutes>} />
           <Route path="/profile" element={<PrivateRoutes><Profile /></PrivateRoutes>} />
