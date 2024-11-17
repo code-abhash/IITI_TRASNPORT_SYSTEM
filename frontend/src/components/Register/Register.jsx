@@ -16,14 +16,14 @@ function Register() {
     password: '',
     cnf_password: '',
     user_type: 'user',
-    // is_superuser: '0',
+   
   });
 
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showCPassword, setShowCPassword] = useState(false);
 
-  const notyf = new Notyf(); // Fix: Notyf should be instantiated as a new object
+  const notyf = new Notyf(); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,7 +36,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate if passwords match
+    
     if (formData.password !== formData.cnf_password) {
       setError("Passwords do not match!");
       return;
@@ -44,7 +44,7 @@ function Register() {
     setError('');
 
     try {
-      // Send a POST request to the backend API for registration
+      
       const response = await axios.post('http://127.0.0.1:8000/api/signup/', {
         first_name: formData.first_name,
         last_name: formData.last_name,
@@ -55,9 +55,9 @@ function Register() {
         cnf_password: formData.cnf_password,
       });
 
-      // On success, show a notification and redirect to login page
+      
       notyf.success('Registration Successful');
-      window.location.href = '/login'; // Redirect to login page
+      window.location.href = '/login'; 
     } catch (err) {
       setError(err.response?.data?.detail || "Signup failed. Please try again.");
       notyf.error("Registration error");

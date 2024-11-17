@@ -11,7 +11,7 @@ const DriverList = () => {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [driverToEdit, setDriverToEdit] = useState(null);
-    const [searchQuery, setSearchQuery] = useState(''); // New state for search query
+    const [searchQuery, setSearchQuery] = useState(''); 
     const isSuperuser = localStorage.getItem('is_superuser');
   const navigate = useNavigate();
   if(isSuperuser == "false") {
@@ -20,8 +20,8 @@ const DriverList = () => {
     useEffect(() => {
         const fetchDrivers = async () => {
             try {
-                const response = await api.get('/get_drivers/'); // Use the API instance
-                setDrivers(response.data); // Assuming response.data is the list of drivers
+                const response = await api.get('/get_drivers/'); 
+                setDrivers(response.data); 
             } catch (error) {
                 console.error('Failed to fetch driver details:', error);
             } finally {
@@ -41,7 +41,7 @@ const DriverList = () => {
     };
     const closeEditModal = () => setIsEditModalOpen(false);
 
-    // Filter drivers based on search query
+
     const filteredDrivers = drivers.filter(
         (driver) =>
             driver.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -52,7 +52,7 @@ const DriverList = () => {
         <div className="relative w-full h-screen flex flex-col items-center pt-20">
             <h1 className="text-4xl font-bold mb-4">Driver Management</h1>
 
-            {/* Search Bar */}
+          
             <div className="mb-6 w-4/5">
                 <input
                     type="text"
@@ -110,7 +110,7 @@ const DriverList = () => {
                 </div>
             )}
 
-            {/* Add Driver Modal */}
+       
             {isAddModalOpen && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white rounded-lg shadow-lg p-4 w-full max-w-lg">
@@ -125,7 +125,7 @@ const DriverList = () => {
                 </div>
             )}
 
-            {/* Edit Driver Modal */}
+         
             {isEditModalOpen && driverToEdit && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white rounded-lg shadow-lg p-4 w-full max-w-lg">

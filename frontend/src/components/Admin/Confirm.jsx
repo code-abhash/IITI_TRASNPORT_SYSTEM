@@ -35,7 +35,7 @@ function BookingDetail({ booking, onClose }) {
         arrival_vehicle_id: arrivalVehicleId,
         departure_vehicle_id: departureVehicleId,
       });
-      setStatus('confirmed'); // Update local status
+      setStatus('confirmed'); 
       alert('Booking confirmed!');
       onClose();
       window.location.reload();
@@ -49,7 +49,7 @@ function BookingDetail({ booking, onClose }) {
         booking_id: booking.booking_id,
         status: 'rejected',
       });
-      setStatus('rejected'); // Update local status
+      setStatus('rejected'); 
       alert('Booking rejected.');
       onClose();
     } catch (error) {
@@ -109,7 +109,7 @@ function BookingDetail({ booking, onClose }) {
               </select>
             </div>
 
-            {/* Select Departure Vehicle */}
+            
             <div className="mt-4">
               <label className="block font-bold">Select Departure Vehicle:</label>
               <select
@@ -126,7 +126,7 @@ function BookingDetail({ booking, onClose }) {
               </select>
             </div>
 
-            {/* Buttons to confirm or reject booking */}
+           
             <div className="flex mt-6 space-x-4">
               <button
                 onClick={handleConfirmBooking}
@@ -144,14 +144,14 @@ function BookingDetail({ booking, onClose }) {
           </>
         )}
 
-        {/* Disable actions if the status is confirmed or rejected */}
+       
         {status === 'confirmed' || status === 'rejected' ? (
           <div className="mt-4">
             <p className="text-gray-500">This booking is already {status}.</p>
           </div>
         ) : null}
 
-        {/* Cancel button */}
+       
         <button
           onClick={onClose}
           className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700 mt-4"

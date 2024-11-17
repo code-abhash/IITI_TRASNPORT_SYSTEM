@@ -8,12 +8,12 @@ import 'notyf/notyf.min.css';
 import { useNavigate } from 'react-router-dom';
 
 function BookingForm() {
-  // Define states for each form section
+ 
   const navigate=useNavigate();
   const token = localStorage.getItem('token');
   const [notification, setNotification] = useState({
     message: '',
-    type: '' // 'success' or 'error'
+    type: '' 
   });
   const [personalDetails, setPersonalDetails] = useState({
     name_user: '',
@@ -63,13 +63,11 @@ function BookingForm() {
     setDepartureDetails((prev) => ({ ...prev, [name]: value }));
   };
 
-  // const handleFileChange = (e) => {
-  //   setPersonalDetails((prev) => ({ ...prev, source_of_funding: e.target.files[0] }));
-  // };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Build the form data for sending file
+    
     if (
       !validateDetails(arrivalDetails) &&
       !validateDetails(departureDetails)
@@ -87,9 +85,7 @@ function BookingForm() {
     };
 
     console.log(bookingData)
-    // if (personalDetails.source_of_funding) {
-    //   formData.append('source_of_funding', personalDetails.source_of_funding);
-    // }
+    
 
     try {
       const response = await api.post('/bookings/', bookingData, {
@@ -125,7 +121,7 @@ function BookingForm() {
 
         <div className="relative z-10 flex flex-col items-center pt-24 pb-10 px-6">
           <h1 className="text-4xl font-bold text-white mb-10 mt-10">Book a Vehicle</h1>
-          {/* Notification */}
+        
           {notification.message && (
             <div
               className={`w-full p-4 text-center mb-4 rounded-md ${
@@ -136,7 +132,7 @@ function BookingForm() {
             </div>
             )}
           <div className="flex flex-col md:flex-row justify-center gap-6 mb-6">
-            {/* Personal Details Card */}
+           
             <div className="bg-white bg-opacity-90 border-[3px] border-gray-500 p-6 rounded-lg shadow-lg w-full max-w-md">
               <h2 className="text-2xl font-bold text-gray-800 mb-4">Personal Details</h2>
               <form className="space-y-4">
@@ -159,12 +155,7 @@ function BookingForm() {
                   <option value="Official">Official</option>
                   <option value="Other">Other</option>
                 </select>
-                {/* <input
-                  type="file"
-                  accept=".pdf"
-                  onChange={handleFileChange}
-                  className="w-full p-2 border border-gray-300 rounded"
-                /> */}
+                
                 <input
                   type="text"
                   name="contact_number"
@@ -184,7 +175,6 @@ function BookingForm() {
               </form>
             </div>
 
-            {/* Arrival Details Card */}
             <div className="bg-white bg-opacity-90 border-[3px] border-gray-500 p-6 rounded-lg shadow-lg w-full max-w-md">
               <h2 className="text-2xl font-bold text-gray-800 mb-4">Arrival Details</h2>
               <input type="date" name="date" value={arrivalDetails.date} onChange={handleArrivalDetailsChange} className="w-full p-2 border border-gray-300 rounded" />
@@ -199,7 +189,7 @@ function BookingForm() {
               </select>
             </div>
 
-            {/* Departure Details Card */}
+         
             <div className="bg-white bg-opacity-90 border-[3px] border-gray-500 p-6 rounded-lg shadow-lg w-full max-w-md">
               <h2 className="text-2xl font-bold text-gray-800 mb-4">Departure Details</h2>
               <input type="date" name="date" value={departureDetails.date} onChange={handleDepartureDetailsChange} className="w-full p-2 border border-gray-300 rounded" />
@@ -215,7 +205,7 @@ function BookingForm() {
             </div>
           </div>
 
-          {/* Submit Button */}
+        
           <div className="flex justify-center">
             <button onClick={handleSubmit} className="bg-blue-600 text-white font-bold py-2 px-8 rounded hover:bg-blue-700">
               Submit Booking

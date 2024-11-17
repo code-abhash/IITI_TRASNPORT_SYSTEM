@@ -2,27 +2,27 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
-import profilePic from '../../assets/profile_pic.png'; // Replace with your actual profile picture
-import api from '../../api'; // Import the api instance
+import profilePic from '../../assets/profile_pic.png'; 
+import api from '../../api'; 
 
 const Profile = () => {
-  const [viewDetails, setViewDetails] = useState(null); // Track which booking details are being viewed
+  const [viewDetails, setViewDetails] = useState(null); 
   const [bookings, setBookings] = useState([]);
-  const [userDetails, setUserDetails] = useState(null); // State to store user details
+  const [userDetails, setUserDetails] = useState(null); 
   const [driverDetailsArrival, setDriverDetailsArrival] = useState(null);
   const [driverDetailsDeparture, setDriverDetailsDeparture] = useState(null);
   const [showArrivalDetails, setShowArrivalDetails] = useState(false);
   const [showDepartureDetails, setShowDepartureDetails] = useState(false);
   function extractRollNumber(email) {
-    // Regular expression to match the roll number after the course code
+   
     const regex = /\d{9}/;
     const match = email.match(regex);
     
-    // If the email matches the pattern, return the roll number part
+   
     if (match) {
-      return match[0]; // match[0] will contain the roll number (9 digits)
+      return match[0]; 
     } else {
-      return null; // Return null if no roll number is found
+      return null; 
     }
   }
   useEffect(() => {
@@ -34,7 +34,7 @@ const Profile = () => {
           },
         });
         setUserDetails(response.data);
-        console.log('user_details_fteched', response.data)// Assuming the response contains user data with name and email
+        console.log('user_details_fteched', response.data)
       } catch (error) {
         console.error('Error fetching user details:', error);
       }
@@ -101,7 +101,7 @@ const Profile = () => {
 
 
           <div className="flex flex-col md:flex-row gap-6 w-full max-w-5xl">
-            {/* Sidebar */}
+           
             <div className="bg-white bg-opacity-90 border-[3px] border-gray-500 p-6 rounded-lg shadow-lg w-full max-w-sm flex flex-col justify-center items-center">
               <img src={`https://cse.iiti.ac.in/stu_pics/btech_2023/${rollNumber}.jpg`} alt="Profile" className="w-32 h-32 rounded-full mx-auto mb-4" />
               <h2 className="text-2xl font-bold text-gray-800 mb-2">{userDetails ? userDetails[0] : 'Loading...'}</h2>
@@ -110,7 +110,7 @@ const Profile = () => {
             </div>
 
 
-            {/* Main Content */}
+           
             <div className="flex-1">
               <h2 className="text-2xl font-bold text-gray-100 mb-4">Past Bookings</h2>
               <div className="max-h-[400px] overflow-y-scroll space-y-4 pr-4">
@@ -122,9 +122,9 @@ const Profile = () => {
                         <p><strong>Status:</strong> {booking.status} </p>
                         <p><strong>Type of Booking:</strong> {booking.type_of_booking}</p>
 
-                        {/* Arrival and Departure Details (Aligned horizontally) */}
+                       
                         <div className="flex justify-between gap-4">
-                          {/* Arrival Details */}
+                          
                           <div className="flex-1">
                             <p><strong>Arrival:</strong></p>
                             {booking.arrival_details && booking.arrival_details.length > 0 ? (
@@ -139,7 +139,7 @@ const Profile = () => {
                               <p>No arrival details available.</p>
                             )}
 
-                            {/* Only show the button if arrival details are available */}
+                            
                             {booking.arrival_details && booking.arrival_details.length > 0 && (
                               <button
                                 onClick={() => fetchDriverDetailsArrival(booking.arrival_details[0].arrival_id)}
@@ -162,7 +162,7 @@ const Profile = () => {
                             )}
                           </div>
 
-                          {/* Departure Details */}
+                         
                           <div className="flex-1">
                             <p><strong>Departure:</strong></p>
                             {booking.departure_details && booking.departure_details.length > 0 ? (
@@ -177,7 +177,7 @@ const Profile = () => {
                               <p>No departure details available.</p>
                             )}
 
-                            {/* Only show the button if departure details are available */}
+                            
                             {booking.departure_details && booking.departure_details.length > 0 && (
                               <button
                                 onClick={() => fetchDriverDetailsDeparture(booking.departure_details[0].departure_id)}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import api from '../../api'; // Import your api instance
+import api from '../../api'; 
 
 const AddDriverForm = () => {
   const [formData, setFormData] = useState({
@@ -17,9 +17,9 @@ const AddDriverForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post('/add_driver/', formData); // Use api.post instead of fetch
+      const response = await api.post('/add_driver/', formData); 
 
-      if (response.status === 201) { // Check for successful creation (typically 201 for POST)
+      if (response.status === 201) { 
         alert('Driver added successfully');
         setFormData({
           name: '',

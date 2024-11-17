@@ -42,9 +42,9 @@ function Login() {
         password: formData.password
       });
       
-      const { access, refresh } = response.data;  // Assuming this is the correct response structure
-      localStorage.setItem('token', access);      // Save access token
-      localStorage.setItem('refresh_token', refresh);  // Save refresh token
+      const { access, refresh } = response.data;  
+      localStorage.setItem('token', access);     
+      localStorage.setItem('refresh_token', refresh);  
       setIsAuthenticated(true); 
       notyf.success('Login Successful')
       navigate('/');

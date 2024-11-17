@@ -16,7 +16,7 @@ function Home() {
   useEffect(() => {
  
 
-    // Admin:
+ 
     const fetchUserDetails = async () => {
       try {
         const response = await api.get('http://127.0.0.1:8000/api/userdetails/', {
@@ -25,7 +25,7 @@ function Home() {
           },
         });
         setUserDetails(response.data);
-        console.log('user_details_fteched', response.data[3])// Assuming the response contains user data with name and email
+        console.log('user_details_fteched', response.data[3])
         localStorage.setItem('is_superuser', response.data[3]);
       } catch (error) {
         console.error('Error fetching user details:', error);
@@ -62,7 +62,6 @@ function Home() {
         <Navbar />
       </div>
 
-      {/* Slideshow Background */}
       <div className="absolute inset-0 z-0">
         <img
           src={images[currentImageIndex]}
@@ -72,13 +71,13 @@ function Home() {
         <div className="absolute inset-0 bg-black opacity-80"></div>
       </div>
 
-      {/* Content Overlay */}
+      
       <div className="relative z-10 flex flex-col md:flex-row justify-center items-center h-full px-4 md:px-10 space-y-20 md:space-y-0 md:space-x-24 lg:space-x-48 pt-12">
         <div className="text-white text-3xl sm:text-4xl md:text-6xl font-bold text-center md:text-left max-w-full md:max-w-xs">
           IIT INDORE TRANSPORT SYSTEM
         </div>
 
-        {/* Notifications Card */}
+        
         <div
           className="bg-white bg-opacity-90 border-[3px] border-gray-500 p-4 md:p-6 rounded-lg shadow-lg w-2/3 max-w-md h-96 overflow-hidden"
           onMouseEnter={() => setIsHovered(true)}

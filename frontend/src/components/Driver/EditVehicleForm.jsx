@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '../../api'; // Import your api instance
+import api from '../../api'; 
 
 const EditVehicleForm = ({ vehicle, onClose, onUpdate }) => {
   const [formData, setFormData] = useState({
@@ -12,7 +12,7 @@ const EditVehicleForm = ({ vehicle, onClose, onUpdate }) => {
 
   const [drivers, setDrivers] = useState([]);
 
-  // Load the vehicle's current details for editing
+
   useEffect(() => {
     if (vehicle) {
       setFormData({
@@ -25,12 +25,12 @@ const EditVehicleForm = ({ vehicle, onClose, onUpdate }) => {
     }
   }, [vehicle]);
 
-  // Fetch drivers from backend
+
   useEffect(() => {
     const fetchDrivers = async () => {
       try {
-        const response = await api.get('/drivers/'); // Use api.get instead of fetch
-        setDrivers(response.data); // Assuming the data is in the response.data
+        const response = await api.get('/drivers/'); 
+        setDrivers(response.data); 
       } catch (error) {
         console.error("Error fetching drivers:", error);
       }
@@ -48,9 +48,9 @@ const EditVehicleForm = ({ vehicle, onClose, onUpdate }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.put(`/update_vehicle/${vehicle.vehicle_id}/`, formData); // Use api.put instead of fetch
+      const response = await api.put(`/update_vehicle/${vehicle.vehicle_id}/`, formData); 
 
-      if (response.status === 200) { // 200 for successful PUT requests
+      if (response.status === 200) { 
         alert('Vehicle updated successfully');
         onUpdate(formData);
         onClose();

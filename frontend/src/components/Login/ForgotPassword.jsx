@@ -64,23 +64,23 @@ import axios from 'axios';
 import api from '../../api';
 
 const PasswordResetRequest = () => {
-    // State to store the username input value
+    
     const [username, setUsername] = useState('');
-    // State to store success or error message
+   
     const [message, setMessage] = useState('');
 
-    // Handle form submission
+ 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent default form submission
+        e.preventDefault();
         try {
-            // Send POST request to API for password reset
+          
             await api.post('password_reset/', { username });
-            // Set success message if request is successful
+           
             setMessage('Password reset email sent.');
         } catch (error) {
-            // Set error message if request fails
+            
             setMessage('Error sending password reset email.');
-            console.error(error); // Log error to console
+            console.error(error);
         }
     };
 
@@ -106,8 +106,8 @@ const PasswordResetRequest = () => {
                                 id="username"
                                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-gray-500"
                                 value={username}
-                                onChange={(e) => setUsername(e.target.value)} // Update username state on input change
-                                required // Make input field required
+                                onChange={(e) => setUsername(e.target.value)} 
+                                required 
                             />
                         </div>
                         <button
@@ -117,7 +117,7 @@ const PasswordResetRequest = () => {
                             Send Password Reset Email
                         </button>
                     </form>
-                    {message && <p className="text-center text-sm text-gray-600 mt-4">{message}</p>} {/* Display message if present */}
+                    {message && <p className="text-center text-sm text-gray-600 mt-4">{message}</p>} 
                 </div>
             </div>
            

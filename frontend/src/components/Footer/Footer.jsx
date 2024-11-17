@@ -4,14 +4,14 @@ function Footer() {
   return (
     <footer className="bg-gray-900 text-white py-8">
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
-        {/* Logo */ }
+      
         <div className="flex flex-col items-center text-center md:items-start md:text-left">
           
            <a href="https://www.iiti.ac.in/"> <img    src={logo} alt="IIT Indore  Logo" className="w-80 h-38 mb-2" /> </a> 
           
         </div>
 
-        {/* Contact Information Section */}
+      
         <div className="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-16 text-center md:text-left">
           <div>
             <p className="font-semibold"></p>
@@ -58,7 +58,7 @@ function Footer() {
         </div>
       </div>
 
-      {/* Footer Bottom Section */}
+     
       <div className="text-center text-sm mt-6 border-t border-gray-700 pt-4">
         <p>© 2024 IIT Indore| All rights reserved </p>
       </div>

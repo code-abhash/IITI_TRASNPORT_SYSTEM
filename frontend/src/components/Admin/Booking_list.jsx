@@ -27,7 +27,7 @@ function BookingList() {
     fetchBookings();
   }, []);
 
-  // Filter bookings based on search query
+ 
   const filteredBookings = bookings.filter((booking) =>
     booking.name_user.toLowerCase().includes(searchQuery.toLowerCase()) || 
     booking.booking_id.toString().includes(searchQuery) ||
@@ -40,13 +40,13 @@ function BookingList() {
       <div className="min-h-screen bg-gray-50 pt-24 pb-10 px-6">
         <h1 className="text-4xl font-bold text-[#586994] mb-10 text-center">Booking List</h1>
 
-        {/* Search Bar */}
+      
         <div className="mb-6 text-center">
           <input
             type="text"
             placeholder="Search by Name or Booking ID"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)} // Update search query on change
+            onChange={(e) => setSearchQuery(e.target.value)} 
             className="border px-4 py-2 rounded-lg w-1/2"
           />
         </div>

@@ -16,7 +16,7 @@ function Rent() {
   console.log(isSuperuser);
   return (
     <>
-      {/* Main background container */}
+    
       <div
         className="relative flex flex-col min-h-screen bg-gray-50"
         style={{
@@ -33,12 +33,12 @@ function Rent() {
             <Navbar />
           </div>
 
-          {/* Page Header */}
+          
           <h1 className="text-4xl font-bold text-center text-gray-100 mb-10">
             RATE LIST OF INSTITUTE VEHICLES
           </h1>
 
-          {/* Institute Vehicles Section */}
+         
           <section>
             <div className="flex items-center mb-4">
               <h2 className="text-2xl font-semibold text-white">Rate list of Institute Vehicles</h2>
@@ -90,17 +90,17 @@ function Rent() {
 
 <section>
   <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-x-4 sm:space-y-0">
-    {/* Vehicle Box 1 */}
+    
     <div className="bg-gray-600 text-white p-6 rounded-lg shadow-lg w-full sm:w-1/3 h-80">
-      {/* Insert Image */}
+      
       <a href="/Public/scheduleEV.pdf">
       <div
   style={{
     display:"flex",
     justifyContent: "center",
     alignItems: "center",
-    height: "100%", // Full viewport height
-     // Optional background color for contrast
+    height: "100%", 
+     
   }}
 >
 <img
@@ -112,7 +112,7 @@ function Rent() {
     backgroundColor: "rgb(245, 288, 255)",
     objectFit: "scale-down",
     borderRadius: "70%",
-    transition: "transform 0.3s ease, box-shadow 0.3s ease", // Smooth transition
+    transition: "transform 0.3s ease, box-shadow 0.3s ease", 
   }}
   className="hover:scale-105 hover:shadow-lg"
 />
@@ -120,9 +120,9 @@ function Rent() {
 </a>
 
       <div className=" text-center">
-        {/* PDF Link */}
+       
         <a
-        href="/Public/scheduleEV.pdf"  // Correct path to the file in the public folder
+        href="/Public/scheduleEV.pdf"  
         className="text-gray hover:text-blue-600"
         >
         View Schedule PDF
@@ -132,17 +132,16 @@ function Rent() {
 
 
 
-    {/* Vehicle Box 2 */}
+    
     <div className="bg-gray-600 text-white p-6 rounded-lg shadow-lg w-full sm:w-1/3 h-80">
-      {/* Insert Image */}
+     
       <a href="/Public/Bus_schedule.pdf">
       <div
   style={{
     display:"flex",
     justifyContent: "center",
     alignItems: "center",
-    height: "100%", // Full viewport height
-     // Optional background color for contrast
+    height: "100%", 
   }}
 >
   
@@ -154,16 +153,16 @@ function Rent() {
       height: "80%",
       backgroundColor: "rgb(245, 288, 255)",
       objectFit: "scale-down",
-      borderRadius: "70%", // Circular shapetransition: "transform 0.3s ease, box-shadow 0.3s ease", // Smooth transition
+      borderRadius: "70%", 
     }}
     className="hover:scale-105 hover:shadow-lg"
   />  
 </div>
 </a>
       <div className="text-center">
-        {/* PDF Link */}
+        
         <a
-          href="/Public/Bus_schedule.pdf" // Replace with the actual PDF path
+          href="/Public/Bus_schedule.pdf" 
           target="_blank"
           className="text-gray  hover:text-blue-600"
         >

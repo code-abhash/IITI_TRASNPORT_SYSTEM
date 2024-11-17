@@ -4,38 +4,38 @@ import { useParams, useNavigate } from 'react-router-dom';
 import api from '../../api';
 
 const PasswordResetConfirm = () => {
-    // State to store the new password input value
+   
     const [password, setPassword] = useState('');
-    // State to store the confirm password input value
+    
     const [confirmPassword, setConfirmPassword] = useState('');
-    // State to store success or error message
+    
     const [message, setMessage] = useState('');
-    // Extracting username and token from URL parameters
+   
     const { username, token } = useParams();
-    // Navigation hook to redirect after successful password reset
+   
     const navigate = useNavigate();
 
-    // Handle form submission
+  
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent default form submission
+        e.preventDefault(); 
 
-        // Check if passwords match
+    
         if (password !== confirmPassword) {
             setMessage('Passwords do not match.');
             return;
         }
 
         try {
-            // Send POST request to API for password reset
+           
             const response = await api.post(`reset/${username}/${token}/`, { password });
-            // Set success message if request is successful
+        
             setMessage('Password has been reset successfully.');
-            // Redirect to login page after successful reset
+           
             navigate('/login');
         } catch (error) {
-            // Set error message if request fails
+           
             setMessage('Error resetting password.');
-            console.error(error); // Log error to console
+            console.error(error); 
         }
     };
 
@@ -61,8 +61,8 @@ const PasswordResetConfirm = () => {
                                 id="password"
                                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-gray-500"
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)} // Update password state on input change
-                                required // Make input field required
+                                onChange={(e) => setPassword(e.target.value)} 
+                                required 
                             />
                         </div>
                         <div className="mb-4">
@@ -74,8 +74,8 @@ const PasswordResetConfirm = () => {
                                 id="confirmPassword"
                                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-gray-500"
                                 value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)} // Update confirmPassword state on input change
-                                required // Make input field required
+                                onChange={(e) => setConfirmPassword(e.target.value)} 
+                                required 
                             />
                         </div>
                         <button
@@ -85,10 +85,10 @@ const PasswordResetConfirm = () => {
                             Reset Password
                         </button>
                     </form>
-                    {message && <p className="text-center text-sm text-gray-600 mt-4">{message}</p>} {/* Display message if present */}
+                    {message && <p className="text-center text-sm text-gray-600 mt-4">{message}</p>} 
                 </div>
             </div>
-            {/* <Footer /> */}
+          
         </div>
     );
 };

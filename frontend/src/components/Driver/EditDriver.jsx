@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '../../api'; // Import your api instance
+import api from '../../api'; 
 
 const EditDriverForm = ({ driver, onClose }) => {
   const [formData, setFormData] = useState({
@@ -24,9 +24,9 @@ const EditDriverForm = ({ driver, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.put(`/drivers/update/${driver.driver_id}/`, formData); // Use api.put instead of fetch
+      const response = await api.put(`/drivers/update/${driver.driver_id}/`, formData); 
 
-      if (response.status === 200) { // 200 for successful PUT requests
+      if (response.status === 200) { 
         alert('Driver updated successfully');
         onClose();
         window.location.reload();

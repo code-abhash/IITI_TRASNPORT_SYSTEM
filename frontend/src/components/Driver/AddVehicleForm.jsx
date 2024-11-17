@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '../../api'; // Import your api instance
+import api from '../../api'; 
 
 const AddVehicleForm = () => {
   const [formData, setFormData] = useState({
@@ -15,8 +15,8 @@ const AddVehicleForm = () => {
   useEffect(() => {
     const fetchDrivers = async () => {
       try {
-        const response = await api.get('/drivers/'); // Use api.get instead of fetch
-        setDrivers(response.data); // Assuming the data is in the response.data
+        const response = await api.get('/drivers/'); 
+        setDrivers(response.data); 
       } catch (error) {
         console.error("Error fetching drivers:", error);
       }
@@ -34,9 +34,9 @@ const AddVehicleForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post('/add_vehicle/', formData); // Use api.post instead of fetch
+      const response = await api.post('/add_vehicle/', formData); 
 
-      if (response.status === 201) { // 201 is commonly used for successful POST requests
+      if (response.status === 201) { 
         alert('Vehicle added successfully');
         setFormData({
           driver: '',

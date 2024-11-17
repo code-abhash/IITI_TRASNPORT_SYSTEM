@@ -2,21 +2,21 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import AddVehicleForm from './AddVehicleForm';
-import EditVehicleForm from './EditVehicleForm'; // Import EditVehicleForm
+import EditVehicleForm from './EditVehicleForm'; 
 import api from '../../api';
 import { useNavigate } from 'react-router-dom';
 function VehicleList() {
   const [vehicles, setVehicles] = useState([]);
   const [isAddVehiclePopupOpen, setIsAddVehiclePopupOpen] = useState(false);
   const [isEditVehiclePopupOpen, setIsEditVehiclePopupOpen] = useState(false);
-  const [selectedVehicle, setSelectedVehicle] = useState(null); // Track selected vehicle for editing
-  const [searchQuery, setSearchQuery] = useState(''); // New state for search query
+  const [selectedVehicle, setSelectedVehicle] = useState(null); 
+  const [searchQuery, setSearchQuery] = useState(''); 
   const isSuperuser = localStorage.getItem('is_superuser');
   const navigate = useNavigate();
   if(isSuperuser == "false") {
     navigate('/');
   }
-  // Fetch the list of vehicles from the backend
+ 
   useEffect(() => {
     const fetchVehicles = async () => {
       try {

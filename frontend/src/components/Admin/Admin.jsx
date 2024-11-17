@@ -6,7 +6,7 @@ import img1 from '../../assets/slide_pic_1.png';
 import img2 from '../../assets/slide_pic_2.jpg';
 import img3 from '../../assets/slide_pic_3.png';
 import { Link } from 'react-router-dom';
-import api from '../../api'; // Import the API instance
+import api from '../../api'; 
 
 function Admin() {
   const images = [img1, img2, img3];
@@ -21,13 +21,13 @@ function Admin() {
   const fetchAnnouncements = async () => {
     try {
       const response = await api.get('/notifications/');
-      setAnnouncements(response.data); // Set the fetched announcements to state
+      setAnnouncements(response.data); 
     } catch (error) {
       console.error('Error fetching announcements:', error);
     }
   };
 
-  // Fetch announcements on component mount
+ 
   useEffect(() => {
     fetchAnnouncements();
 
@@ -67,12 +67,12 @@ function Admin() {
 
   return (
     <div className="relative w-full min-h-screen">
-      {/* Navbar */}
+     
       <div className="fixed top-0 left-0 w-full z-20">
         <Navbar />
       </div>
 
-      {/* Slideshow Background */}
+     
       <div className="absolute inset-0 z-0">
         <img
           src={images[currentImageIndex]}
@@ -82,15 +82,15 @@ function Admin() {
         <div className="absolute inset-0 bg-black opacity-80"></div>
       </div>
 
-      {/* Content Overlay */}
+    
       <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 md:px-10 pt-20 space-y-10">
         <h1 className="text-4xl md:text-5xl mt-10 font-bold text-white text-center">
           Admin Dashboard
         </h1>
 
-        {/* Responsive Row for Sections */}
+      
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl">
-          {/* Announcements Section */}
+        
           <div className="bg-white bg-opacity-90 border-[3px] border-gray-500 p-6 rounded-lg shadow-lg">
             <h2 className="text-2xl font-bold mb-4 text-center">Manage Announcements</h2>
             <div className="flex items-center mb-4">
@@ -126,7 +126,7 @@ function Admin() {
             </ul>
           </div>
 
-          {/* Transport Management Section */}
+       
           <div className="bg-white bg-opacity-90 border-[3px] border-gray-500 p-6 rounded-lg shadow-lg">
             <h2 className="text-2xl font-bold mb-4 text-center">Manage Transport</h2>
             <div className="flex flex-col space-y-4">
@@ -144,7 +144,7 @@ function Admin() {
         </div>
       </div>
 
-      {/* Footer */}
+     
       <div className="relative z-20 w-full">
   <Footer />
 </div>

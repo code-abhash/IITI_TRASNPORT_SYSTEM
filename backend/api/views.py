@@ -151,7 +151,7 @@ class BookingView(APIView):
                         transaction.set_rollback(True)
                         return Response(departure_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-                # Send email notification after booking is saved
+              
                 if booking.user_id.email_id:
                     send_mail(
                         subject='New Booking Created',
@@ -166,7 +166,7 @@ class BookingView(APIView):
                 return Response(booking_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # View to add a driver
-@api_view(['POST'])  # Only handle POST requests
+@api_view(['POST'])  
 def add_driver(request):
     if request.method == 'POST':
         serializer = DriverSerializer(data=request.data)
@@ -175,7 +175,7 @@ def add_driver(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)  # Respond with created data
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  # Handle invalid data
 
-    # Handle other HTTP methods like GET or PUT if needed (optional)
+   
     return Response({"message": "Method not allowed"}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 # Add a new vehicle
@@ -298,10 +298,10 @@ def update_vehicle(request, vehicle_id):
     except Vehicle.DoesNotExist:
         return Response({'detail': 'Vehicle not found'}, status=status.HTTP_404_NOT_FOUND)
 
-    # Deserialize the incoming request data and validate it
+ 
     serializer = VehicleSerializer(vehicle, data=request.data)
     if serializer.is_valid():
-        # Save the updated vehicle data to the database
+       
         serializer.save()
         return Response({'detail': 'Vehicle updated successfully'}, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -330,7 +330,6 @@ def get_user_details(request):
     user_serializer = UserSerializer(user)
     user_data = user_serializer.data
     print(user_data)
-    # Add additional fields based on user_type
     user_details=[]
     name=user_data['username']
     user_details.append(name)
@@ -345,14 +344,12 @@ def get_user_details(request):
 
 
 
-    # Return combined user data with role-specific information
     return Response(user_details, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
 def confirm_booking(request):
     try:
-        # Extract data from the request
         booking_id = request.data.get('booking_id')
         status_update = request.data.get('status', 'confirmed')
         arrival_vehicle_id = request.data.get('arrival_vehicle_id')
@@ -361,17 +358,17 @@ def confirm_booking(request):
         if not booking_id:
             return Response({"error": "Booking ID is required."}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Fetch the booking object
+       
         booking = Bookings.objects.get(booking_id=booking_id)
         booking.status = status_update
         booking.save()
         print("booking",booking)
 
-        # Assign vehicles to arrival and departure details if they exist
+       
         assign_vehicle_to_detail(ArrivalDetails, booking_id, arrival_vehicle_id)
         assign_vehicle_to_detail(DepartureDetails, booking_id, departure_vehicle_id)
 
-        if booking.user_id.email_id:  # Assuming user_id is a foreign key to the user model
+        if booking.user_id.email_id:  
             send_mail(
                 subject = f'Booking {"Confirmation" if booking.status == "confirmed" else "Rejection"}',
                 message=f"Hello {booking.user_id.username},\n\nYour booking (ID: {booking_id}) has been  {booking.status}. You can check your arrival and departure details in your account.\n\nThank you for choosing our service!",
@@ -380,7 +377,7 @@ def confirm_booking(request):
                 fail_silently=False,
             )
 
-        # Prepare success response with details
+       
         return Response({
             "message": "Booking confirmed and vehicle IDs updated successfully.",
             "booking_id": booking_id,
@@ -407,7 +404,7 @@ def assign_vehicle_to_detail(model, booking_id, vehicle_id):
             detail.vehicle_id = vehicle
             detail.save()
         except model.DoesNotExist:
-            # No action needed if detail does not exist for the booking
+           
             pass
 
 
@@ -422,7 +419,7 @@ class PasswordResetView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# API view to handle password reset confirmation
+
 class PasswordResetConfirmView(APIView):
     permission_classes = [AllowAny]
 

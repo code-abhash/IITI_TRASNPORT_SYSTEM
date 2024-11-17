@@ -5,7 +5,7 @@ import { AuthContext } from '../PrivateRoutes/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
-  const isSuperuser = localStorage.getItem('is_superuser') === 'true'; // Check if superuser is true
+  const isSuperuser = localStorage.getItem('is_superuser') === 'true';
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext); 
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ function Navbar() {
             </NavLink>
         {isAuthenticated ? (
           <>
-            {/* Only show Bookings if not a superuser */}
+            
             {!isSuperuser && (
               <NavLink
                 to="/bookings"
@@ -58,7 +58,7 @@ function Navbar() {
                 Bookings
               </NavLink>
             )}
-            {/* Show Admin instead of My Profile if the user is a superuser */}
+           
             
             {/* <NavLink
               to="/rent"
