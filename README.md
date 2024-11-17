@@ -35,8 +35,8 @@ This project is a full-stack application developed as a minor project fot the CS
 
 - Please run these 2 servers in split terminals
 - Make sure you have installed node.js,npm,python,pip in your Machine
-- We have requirements.txt file which downloads the entire dependencies required for both django and flask
-- 
+- We have requirements.txt file which downloads the entire dependencies required for django
+
 ### Frontend
 1. Clone the repository:
    ```bash
