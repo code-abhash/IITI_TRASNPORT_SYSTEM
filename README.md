@@ -53,13 +53,16 @@ This project is a full-stack application developed as a minor project fot the CS
 
 1. Set up your own virtual environment in backend folder:
    ```bash
-   cd backend
-   python -m venv venv
+   python -m venv env
    On Mac: source venv/bin/activate  # On Windows: venv\Scripts\activate
    ```
-2. Install dependencies, apply migrations and start the server
+2. Download the necessary package using requirement.txt in the virtual enviroment
    ```bash
    pip install -r requirements.txt
+   ```
+3. Activate virtual enviroment and apply migrations and start the server
+   ```bash      
+   cd backend
    python manage.py makemigrations
    python manage.py migrate
    python manage.py runserver
