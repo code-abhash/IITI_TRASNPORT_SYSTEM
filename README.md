@@ -34,7 +34,7 @@ This project is a full-stack application developed as a minor project fot the CS
 ## Installation
 
 - Please run these 2 servers in split terminals
-- Make sure you have installed node.js,npm,python,pip in your Machine
+- Please make sure you have installed node.js,npm,python,pip in your Machine
 - We have requirements.txt file which downloads the entire dependencies required for django
 
 ### Frontend
